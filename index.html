@@ -19,10 +19,6 @@
   --orange: #ff5d01;
   --blue: #007aff;
   --pink: #fe6efd;
-  --eva: var(--blue);
-  --hans: var(--pink);
-  --rik: var(--green);
-  --stijn: var(--orange);
   /* tokens op paginaniveau (zwarte grond); tegels zetten ze opnieuw */
   --ink: var(--white);
   --muted: #b3b3b3;
@@ -63,7 +59,6 @@ p { margin: 0; }
 .corner { position: absolute; top: 10px; left: 12px; right: 12px; display: flex; justify-content: space-between; gap: 12px; }
 .corner span:nth-child(2) { text-align: right; }
 
-.eva { --c: var(--eva); } .hans { --c: var(--hans); } .rik { --c: var(--rik); } .stijn { --c: var(--stijn); }
 .tag { display: inline-flex; align-items: center; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; padding: 3px 7px 2px; white-space: nowrap; line-height: 1.3; }
 
 /* Slug */
@@ -141,7 +136,7 @@ h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%;
 .card.feature h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: .95; }
 .big-words { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 2.8vw, 32px); line-height: .95; margin-top: 10px; }
 .big-words.small { font-size: 21px; line-height: 1.05; }
-blockquote { margin: 0; background: var(--c); color: #000; padding: 46px 20px 18px; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; }
+blockquote { margin: 0; background: var(--green); color: #000; padding: 46px 20px 18px; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; }
 blockquote::before { content: "“"; position: absolute; top: 4px; left: 18px; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1; }
 blockquote p { font-size: 21px; font-weight: 600; line-height: 1.3; }
 blockquote.big p { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(24px, 3.6vw, 44px); line-height: .95; }
@@ -813,7 +808,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   document.getElementById('cover').innerHTML = D.coverage.map(function (r) {
     var any = r.slice(1).some(Boolean);
     return '<div class="cov' + (any ? '' : ' none') + '"><span>' + r[0] + '</span><span class="d">' +
-      P.map(function (p, j) { return '<i class="' + (r[j + 1] ? 'on' : '') + '" style="--c:var(--' + p + ')" title="' + D.names[p] + '"></i>'; }).join('') +
+      P.map(function (p, j) { return '<i class="' + (r[j + 1] ? 'on' : '') + '" title="' + D.names[p] + '"></i>'; }).join('') +
       '</span></div>';
   }).join('');
 
