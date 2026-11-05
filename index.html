@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="nl">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Crossmedia Design morgen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: een raster van vlakke kleurtegels op zwart, met smalle zwarte voegen, zware brede kapitalen en kleine metalabels in de hoeken. Bewust één look (donker), niet thema-afhankelijk. */
+:root {
+  color-scheme: dark;
+  --black: #000000;
+  --coal: #1b1b1b;
+  --white: #ffffff;
+  --grey: #dddddd;
+  --green: #33fc09;
+  --orange: #ff5d01;
+  --blue: #007aff;
+  --pink: #fe6efd;
+  --eva: var(--blue);
+  --hans: var(--pink);
+  --rik: var(--green);
+  --stijn: var(--orange);
+  /* tokens op paginaniveau (zwarte grond); tegels zetten ze opnieuw */
+  --ink: var(--white);
+  --muted: #b3b3b3;
+  --rule: #333333;
+  --sheet: var(--white);
+  --gap: 6px;
+  --font-display: "Archivo", "Arial Black", Impact, sans-serif;
+  --font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { background: var(--black); }
+body {
+  background: var(--black); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* Typografische rollen */
+.heavy { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: .9; letter-spacing: -.01em; hyphens: auto; }
+.meta { font-family: var(--font-body); font-size: 10px; font-weight: 500; line-height: 1.2; text-transform: uppercase; letter-spacing: .04em; }
+.prose { max-width: 64ch; }
+.note { font-size: 15px; color: var(--muted); max-width: 72ch; }
+
+/* Tegels: elke tegel zet zijn eigen tekstkleuren */
+.tile { position: relative; padding: 18px 20px; min-width: 0; background: var(--bg, var(--white)); color: var(--ink); }
+.tile, .card, .tbl-wrap, .bars, .scale, .person, .theme, .cov, .keys li {
+  --ink: #000000; --muted: #4a4a4a; --rule: #cfcfcf; --sheet: #ffffff;
+}
+.tile.dark { --bg: var(--coal); --ink: #fff; --muted: #a8a8a8; --rule: #3a3a3a; }
+.t-white { --bg: var(--white); } .t-grey { --bg: var(--grey); } .t-green { --bg: var(--green); }
+.t-orange { --bg: var(--orange); } .t-blue { --bg: var(--blue); } .t-pink { --bg: var(--pink); }
+.corner { position: absolute; top: 10px; left: 12px; right: 12px; display: flex; justify-content: space-between; gap: 12px; }
+.corner span:nth-child(2) { text-align: right; }
+
+.eva { --c: var(--eva); } .hans { --c: var(--hans); } .rik { --c: var(--rik); } .stijn { --c: var(--stijn); }
+.tag { display: inline-flex; align-items: center; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; padding: 3px 7px 2px; white-space: nowrap; line-height: 1.3; }
+
+/* Slug */
+.slug { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 16px 10px; color: var(--muted); }
+
+/* Kop: raster van tegels */
+.hero { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
+.hero .title { grid-column: span 4; grid-row: span 2; min-height: 380px; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 48px; }
+.hero h1 { font-size: clamp(46px, 8.6vw, 112px); }
+.hero .count { grid-column: span 2; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 44px; }
+.hero .count b { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(56px, 7vw, 92px); line-height: .85; font-variant-numeric: tabular-nums; }
+.hero .count span { font-weight: 600; margin-top: 8px; }
+.progress { display: grid; grid-template-columns: repeat(19, 1fr); gap: 3px; margin-top: 14px; }
+.progress i { height: 10px; background: rgba(0,0,0,.18); display: block; }
+.progress i.on { background: #000; }
+.hero .lead { grid-column: span 2; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 44px; font-size: 19px; font-weight: 500; line-height: 1.35; }
+.hero .caveat { grid-column: span 3; padding-top: 44px; display: flex; align-items: flex-end; }
+.hero .caveat p { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 2.6vw, 34px); line-height: .95; }
+.hero .toc { grid-column: span 3; padding-top: 40px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+.toc a { display: grid; grid-template-columns: 2.4em 1fr; color: inherit; text-decoration: none; font-size: 16px; line-height: 1.25; padding: 2px 0; }
+.toc a:hover { color: var(--orange); }
+.toc .n { font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr 1fr; }
+  .hero .title { grid-column: span 2; grid-row: auto; min-height: 300px; }
+  .hero .count, .hero .lead { grid-column: span 1; }
+  .hero .caveat, .hero .toc { grid-column: span 2; }
+}
+@media (max-width: 460px) { .hero .count, .hero .lead { grid-column: span 2; } }
+
+/* Knoppen */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 28px; margin-bottom: var(--gap); }
+.toolbar .meta { margin-right: auto; color: var(--muted); }
+.toolbar button { font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: var(--white); color: #000; border: 0; padding: 9px 14px; cursor: pointer; }
+.toolbar button:hover { background: var(--orange); }
+
+/* Hoofdstukken: kleurbanden die openklappen */
+.chap { margin-bottom: var(--gap); --chap: var(--white); }
+.chap:has(> .t-grey) { --chap: var(--grey); } .chap:has(> .t-green) { --chap: var(--green); }
+.chap:has(> .t-orange) { --chap: var(--orange); } .chap:has(> .t-blue) { --chap: var(--blue); }
+.chap:has(> .t-pink) { --chap: var(--pink); }
+/* Open hoofdstuk: vrij van zijn buren, band en inhoud samen in één kader */
+.chap[open] { margin-block: 72px; }
+.chap[open]:first-of-type { margin-top: 0; }
+.chap > summary { list-style: none; cursor: pointer; }
+.chap > summary::-webkit-details-marker { display: none; }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) 34px; gap: 10px 24px; align-items: end; padding: 44px 20px 20px; min-height: 170px; }
+.sec-head h2 { font-size: clamp(34px, 5.6vw, 72px); }
+.sec-head .gist { font-size: 16px; font-weight: 500; line-height: 1.35; max-width: 42ch; }
+.tog { width: 30px; height: 30px; position: relative; align-self: end; }
+.tog::before, .tog::after { content: ""; position: absolute; left: 4px; right: 4px; top: 14px; height: 3px; background: #000; transition: transform .2s; }
+.tog::after { transform: rotate(90deg); }
+.chap[open] .tog::after { transform: rotate(0deg); }
+.sec-head:hover .tog::before, .sec-head:hover .tog::after { background: var(--white); }
+@media (max-width: 700px) { .sec-head { grid-template-columns: minmax(0, 1fr) 34px; } .sec-head .gist { grid-column: 1; grid-row: 2; } .tog { grid-column: 2; grid-row: 1; } }
+.chap-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; padding: clamp(24px, 4vw, 44px) clamp(14px, 3.6vw, 40px); background: var(--coal); border: solid var(--chap); border-width: 0 6px 6px; }
+.chap-body > .q { color: var(--muted); font-size: 18px; font-weight: 500; }
+.chap-close { justify-self: start; margin-top: 12px; font-family: var(--font-body); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: var(--chap); color: #000; border: 0; padding: 10px 14px; cursor: pointer; }
+.chap-close:hover { background: var(--grey); }
+@media (prefers-reduced-motion: reduce) { .tog::before, .tog::after { transition: none; } }
+
+/* Inhoud */
+.block { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(20px, 2.4vw, 26px); line-height: .95; color: var(--white); margin-top: 40px; padding-top: 18px; border-top: 3px solid var(--chap); }
+.block > h3.sub:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--gap); }
+.card { background: var(--sheet); color: var(--ink); padding: 16px 18px 18px; min-width: 0; }
+.card ul { margin: 10px 0 0; padding-left: 18px; }
+.card li + li { margin-top: 6px; }
+.card .by { display: block; margin-top: 2px; font-size: 13px; color: #7a7a7a; }
+.card > p { margin-top: 8px; }
+.card .meta { color: var(--muted); display: block; }
+.card.feature { background: var(--white); }
+.card.feature h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: .95; }
+.big-words { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 2.8vw, 32px); line-height: .95; margin-top: 10px; }
+.big-words.small { font-size: 21px; line-height: 1.05; }
+blockquote { margin: 0; background: var(--c); color: #000; padding: 46px 20px 18px; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; }
+blockquote::before { content: "“"; position: absolute; top: 4px; left: 18px; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1; }
+blockquote p { font-size: 21px; font-weight: 600; line-height: 1.3; }
+blockquote.big p { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(24px, 3.6vw, 44px); line-height: .95; }
+
+/* Kernpunten als tegels */
+.keys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--gap); }
+.keys li { background: var(--white); padding: 20px; min-height: 200px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; color: #000; }
+.keys strong { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 22px; line-height: .95; }
+.keys span { font-size: 15.5px; line-height: 1.4; }
+
+/* Respondenten */
+.people { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--gap); }
+.person { background: var(--white); color: #000; padding: 60px 20px 24px; display: flex; flex-direction: column; justify-content: flex-start; position: relative; }
+.person h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 22px; line-height: .95; }
+.person p { margin-top: 10px; font-size: 15px; }
+
+/* Schaal 2.1 */
+.scale { background: var(--white); color: #000; padding: 24px 20px 18px; }
+.scale-track { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+.scale-track::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 11px; height: 3px; background: #000; }
+.step { display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; position: relative; }
+.step .dot { width: 24px; height: 24px; background: var(--white); border: 3px solid #000; }
+.step .who { display: flex; flex-direction: column; gap: 4px; align-items: center; min-height: 40px; }
+.step span.t { font-size: 14px; font-weight: 600; line-height: 1.25; }
+.step.hit .dot { background: #000; }
+
+/* Tabellen */
+.tbl-wrap { overflow-x: auto; background: var(--white); color: #000; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; color: inherit; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+thead th { background: var(--grey); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
+td.c, th.c { text-align: center; width: 110px; }
+td.top { vertical-align: top; }
+.mark { display: inline-block; width: 16px; height: 16px; border: 2px solid #000; }
+.mark.on { background: #000; }
+.chip { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 6px 1px; white-space: nowrap; }
+.chip.al { background: #000; color: #fff; }
+.chip.wil { box-shadow: inset 0 0 0 1px #000; color: #000; }
+#strat th.c, #strat td.c { text-align: left; }
+#strat .chip.niet, #strat .chip.leeg { padding-inline: 0; }
+.chip.niet { color: var(--muted); text-decoration: line-through; }
+.chip.leeg { color: var(--muted); }
+.rk { display: inline-grid; place-items: center; width: 30px; height: 30px; background: var(--grey); font-family: var(--font-display); font-weight: 900; font-size: 16px; font-variant-numeric: tabular-nums; }
+tr.top3 td:first-child { font-weight: 700; }
+tr.top3 { background: #f1f1f1; }
+
+/* Gestapelde balken 3.4 */
+.bars { display: grid; gap: 14px; background: var(--white); color: #000; padding: 20px; }
+.brow { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
+.brow .name { font-weight: 700; font-size: 15px; display: grid; justify-items: start; gap: 3px; }
+.stack { display: flex; height: 30px; background: repeating-linear-gradient(135deg, transparent 0 5px, #cfcfcf 5px 6px); font-size: 12px; font-weight: 700; }
+.stack div { display: flex; align-items: center; padding-left: 8px; overflow: hidden; white-space: nowrap; color: #000; font-variant-numeric: tabular-nums; }
+.seg-p { background: #000; color: #fff !important; }
+.seg-r { background: var(--blue); }
+.seg-m { background: var(--pink); }
+.brow .remark { grid-column: 2; font-size: 13.5px; color: var(--muted); margin-top: -6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; display: inline-block; }
+@media (max-width: 620px) { .brow { grid-template-columns: 1fr; } .brow .remark { grid-column: 1; } }
+
+/* Gespreksthema's */
+.themes { display: grid; gap: var(--gap); }
+.theme { background: var(--white); color: #000; }
+.theme h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 20px; line-height: .95; padding: 16px 18px; background: var(--grey); }
+.theme .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.theme .cols > div { padding: 14px 18px; font-size: 15px; min-width: 0; border-top: 1px solid var(--rule); margin-top: -1px; }
+.theme .cols > div p { margin-top: 6px; }
+
+/* Dekking */
+.cover { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--gap); }
+.cov { display: flex; justify-content: space-between; gap: 8px; padding: 9px 12px; background: var(--white); color: #000; font-size: 14px; }
+.cov .d { display: flex; gap: 4px; flex-shrink: 0; align-items: center; }
+.cov .d i { width: 11px; height: 11px; border: 2px solid #000; display: block; }
+.cov .d i.on { background: #000; }
+.cov.none { background: var(--grey); color: #555; }
+.cover-legend { display: flex; gap: 6px; }
+
+footer.end { margin-top: 72px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
+@media (max-width: 620px) { footer.end { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap" lang="nl">
+  <div class="slug meta">
+    <span>GDM · Arteveldehogeschool</span>
+    <span>Voorbereidende vragenlijst</span>
+    <span>Tussenstand 05.11.2026</span>
+  </div>
+
+  <header class="hero">
+    <div class="tile t-pink title">
+      <div class="corner meta"><span>Evolutie curriculum</span><span>Crossmedia Design</span></div>
+      <h1 class="heavy">Cross&shy;media Design mor&shy;gen</h1>
+    </div>
+    <div class="tile t-green count">
+      <div class="corner meta"><span>Ingevuld</span><span>Respons</span></div>
+      <b><span id="n-in"></span>/<span id="n-total"></span></b>
+      <span>vragenlijsten binnen</span>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+    </div>
+    <div class="tile t-white lead">
+      <div class="corner meta"><span>Vraag</span><span>2026</span></div>
+      <p>Hoe moet onze opleiding evolueren, en hoe gaan collega's vandaag om met AI in hun lessen?</p>
+    </div>
+    <div class="tile t-blue caveat">
+      <div class="corner meta"><span>Let op</span><span>Tussenstand</span></div>
+      <p>Richtingen, nog geen conclusies</p>
+    </div>
+    <nav class="tile dark toc" aria-label="Hoofdstukken">
+      <div class="corner meta"><span>Inhoud</span><span>Hoofdstukken</span></div>
+      <ol id="toc"></ol>
+    </nav>
+  </header>
+
+  <div class="toolbar">
+    <span class="meta">Klik op een hoofdstuk om het te openen</span>
+    <button type="button" id="open-all">Alles openen</button>
+    <button type="button" id="close-all">Alles sluiten</button>
+  </div>
+
+  <details class="chap" id="kern" open>
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>→ Samenvatting</span><span>Crossmedia Design morgen</span></div><h2 class="heavy">Wat nu al opvalt</h2><p class="gist">Zes punten waarin de antwoorden samenkomen.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <ul class="keys">
+      <li><strong>AI is een hulpmiddel</strong><span>Alle vier willen dat de ontwerper zelf denkt en kiest. AI mag helpen in elke stap, maar mag geen vertrekpunt, eindpunt of “surrogaat voor verworven kennis” worden.</span></li>
+      <li><strong>Studenten leunen te hard op AI</strong><span>Ze nemen beelden klakkeloos over, laten dossiers schrijven en zien niet wanneer iets ondermaats is. Daardoor wordt het moeilijk om hun echte competenties in te schatten.</span></li>
+      <li><strong>Eerst het vak, dan de tool</strong><span>Wie geen referentiekader heeft, gebruikt AI als omweg. Techniek, inzicht en “kilometers op de teller” moeten eerst komen.</span></li>
+      <li><strong>Concept, onderzoek, samenwerking</strong><span>Hans en Rik kwamen los van elkaar op exact dezelfde top drie. Stijn zet dezelfde drie op plaats 2 tot 4, met kritisch oordeel over AI-output helemaal bovenaan.</span></li>
+      <li><strong>Een T-profiel, unaniem</strong><span>Een brede basis met één verdieping. Specialisaties veranderen te snel om er de opleiding op te bouwen.</span></li>
+      <li><strong>Vraag naar afspraken</strong><span>Een leerlijn AI per jaar: wat kan, wanneer, en hoe we competenties beoordelen. Plus vorming, licenties en overleg tussen collega's.</span></li>
+    </ul>
+  </div></details>
+
+  <details class="chap" id="wie">
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 0</span><span>Respondenten</span></div><h2 class="heavy">Wie antwoordde</h2><p class="gist">Eva (schijf 1), Hans en Stijn (schijf 2 en 3) en Rik.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <div class="people">
+      <article class="person eva">
+        <div class="corner meta"><span>Schijf 1</span><span>Respondent</span></div>
+        <h3>Eva Vande Populiere</h3>
+        <p>Lay-out Software, Illustrator, GD2, Print Production VT</p>
+      </article>
+      <article class="person hans">
+        <div class="corner meta"><span>Schijf 2 en 3</span><span>Respondent</span></div>
+        <h3>Hans Temmerman</h3>
+        <p>Expert track Art Direction, GD3, GD4, GD VT, Expedition, Photoshop Advanced, stage- en eindwerkbegeleiding</p>
+      </article>
+      <article class="person rik">
+        <div class="corner meta"><span>Meerdere schijven</span><span>Respondent</span></div>
+        <h3>Rik Staesens</h3>
+        <p>Lay-out Software, GD2, GD3, Creative Studio, bachelor- en stagebegeleiding</p>
+      </article>
+      <article class="person stijn">
+        <div class="corner meta"><span>Schijf 2 en 3</span><span>Respondent</span></div>
+        <h3>Stijn Anseel</h3>
+        <p>2D Motion Design, Expert track motion design, Afstudeerproject, stagebegeleiding</p>
+      </article>
+    </div>
+  </div></details>
+
+  <details class="chap" id="naam">
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 1</span><span>Naam</span></div><h2 class="heavy">Een nieuwe naam</h2><p class="gist">GDM dekt de lading gedeeltelijk. Nu vier voorstellen, rond ‘design’, ‘visual’ of ‘media’.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Dekt ‘Grafische en Digitale Media’ nog de lading?</p>
+    <div class="block">
+      <p class="prose">Hans, Rik en Stijn vinden dat de naam de lading <strong>gedeeltelijk</strong> dekt. Volgens Rik klinkt GDM vooral als wat de opleiding nu is, terwijl we evolueren naar een profiel dat breder inzetbaar is. Stijn vond de relatie tussen ‘digitaal’ en ‘grafisch’ altijd moeilijk: het hele grafische proces is al decennia digitaal. Eva gaf geen antwoord op dit deel.</p>
+      <div class="duo">
+        <div class="card feature rik"><span class="tag">Rik · naamvoorstellen</span>
+          <p class="big-words">Visual Design</p>
+          <p class="big-words">Visual Communi&shy;cation Design</p>
+          <p style="margin-top:12px">Design is breed genoeg voor het hele veld. Het blijven vormgevers: een visueel eindproduct blijft belangrijk.</p></div>
+        <div class="card feature stijn"><span class="tag">Stijn · naamvoorstellen</span>
+          <p class="big-words">Creative Media</p>
+          <p class="big-words">Media Design &amp; Techno&shy;logy</p>
+          <p style="margin-top:12px">Creative Media is breed genoeg en wordt in andere landen al gebruikt. Media Design &amp; Technology benoemt de twee uiterste polen: alles wat we aanbieden zit daartussen.</p></div>
+        <div class="card"><span class="meta">Zeker wel</span>
+          <p class="big-words small">design · visual · media</p>
+          <p style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag rik">Rik: design, visual</span><span class="tag stijn">Stijn: media</span></p>
+          <span class="meta" style="margin-top:20px">Zeker niet</span>
+          <p class="big-words small">technology · communicatie · AI · grafisch</p>
+          <p style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag hans">Hans: AI, communicatie, technology</span><span class="tag rik">Rik: technology, communication</span><span class="tag stijn">Stijn: graphic, grafische</span></p></div>
+      </div>
+      <p class="note">Taal: Stijn kiest Engels, omdat je dan je blik ruimer richt dan het lokale landschap. Rik vinkte zowel Engelstalig als “maakt niet uit” aan: veel opleidingen kiezen een Engelse naam, ook voor internationalisering. Opvallend: Rik wil “communication” liever niet in de naam, maar het tweede voorstel van Rik bevat het wel. En “technology” uit het tweede voorstel van Stijn staat bij Hans en Rik op de nee-lijst.</p>
+    </div>
+  </div></details>
+
+  <details class="chap" id="ai">
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 2</span><span>AI in de les</span></div><h2 class="heavy">AI in de lessen</h2><p class="gist">Van af en toe tot in enkele opdrachten. Iedereen ziet studenten te hard op AI leunen.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Hoe komt AI vandaag aan bod, en wat werkt?</p>
+    <div class="block">
+      <h3 class="sub">Hoeveel AI zit er in het vak?</h3>
+      <div class="scale"><div class="scale-track" id="scale"></div></div>
+
+      <h3 class="sub">Op welke manier?</h3>
+      <div class="tbl-wrap"><table id="ways"></table></div>
+      <p class="note">Hans gebruikt AI op alle manieren. Eva en Rik verbieden het in bepaalde opdrachten en gebruiken het minder breed. Stijn vinkte geen verbod aan en maakt AI nergens verplicht, maar laat het alleen in geselecteerde opdrachten 100% toe. Hans, Rik en Stijn gebruiken AI zelf om hun lessen voor te bereiden.</p>
+
+      <h3 class="sub">Welke tools, waarvoor?</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span>
+          <ul>
+            <li><strong>Illustrator</strong>: vectoriseren, recolor.<span class="by">Docent en student</span></li>
+            <li><strong>GD2</strong>: ontwerpen met AI is nog niet toegelaten.</li>
+          </ul></div>
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul>
+            <li><strong>Photoshop</strong>: retouches en vrijstellen.<span class="by">Docent en student</span></li>
+            <li><strong>Tekst-AI</strong>: brainstormen, opdrachten, dossiers, research.<span class="by">Docent en student</span></li>
+            <li><strong>Midjourney, Magnific …</strong>: moodboards, een verplichte videoclip, Battle of the prompts, campagnebeelden, pitches.<span class="by">Student</span></li>
+          </ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul>
+            <li><strong>Elke LLM</strong>: verdieping vragen in de researchfase.<span class="by">Student</span></li>
+            <li><strong>Claude</strong>: interactieve lesmiddelen maken, zoals een quiz voor Creative Studio.<span class="by">Docent</span></li>
+          </ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span>
+          <ul>
+            <li><strong>Higgsfield</strong>: fotografische assets maken in plaats van stockfoto's zoeken, en foto naar video.<span class="by">Docent en student</span></li>
+            <li><strong>Claude</strong>: planningsdocumenten en materiaal voor de lesorganisatie.<span class="by">Docent</span></li>
+            <li><strong>ChatGPT, Claude</strong>: copywriting voor 2D Motion projecten.</li>
+          </ul></div>
+      </div>
+
+      <h3 class="sub">Wat werkt</h3>
+      <div class="duo">
+        <blockquote class="eva"><p>Eerst de techniek of het technisch inzicht aanleren, daarna de mogelijkheid aanbieden via AI.</p><footer><span class="tag">Eva</span></footer></blockquote>
+        <blockquote class="hans"><p>Spreek per opdracht af welke onderdelen wel en niet met AI mogen.</p><footer><span class="tag">Hans</span></footer></blockquote>
+        <blockquote class="rik"><p>Ik integreer een slide over AI in de briefing om af te bakenen wat kan en wat niet.</p><footer><span class="tag">Rik</span></footer></blockquote>
+        <blockquote class="stijn"><p>Studenten kunnen als kritische art director op basis van een goed gecureerd moodboard visuele assets voor hun project genereren via AI.</p><footer><span class="tag">Stijn</span></footer></blockquote>
+      </div>
+      <p class="note">Stijn laat studenten ook scripts genereren voor complexe animaties. De basisskill is dan een complexe animatie beschrijven en ontleden in eenvoudige onderdelen.</p>
+
+      <h3 class="sub">Wat loopt mis</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span>
+          <ul>
+            <li>Studenten gebruiken AI en noemen het een eigen ontwerp.</li>
+            <li>Ze klikken op een knop, maar kunnen het resultaat niet sturen: geen tweede passende illustratie, niet dezelfde stijl opnieuw.</li>
+            <li>Eerstejaars zien nog niet dat stijlen niet samengaan of dat iets ondermaats is.</li>
+          </ul></div>
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul>
+            <li>Zodra ze in schijf 2 AI leren, vergeten ze de manuele technieken uit schijf 1.</li>
+            <li>AI-beelden worden klakkeloos overgenomen en te weinig verder bewerkt.</li>
+            <li>Kritisch nadenken valt weg; controle over details vinden ze onnodig.</li>
+          </ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul>
+            <li>Studenten leunen zo hard op AI om iets te ontwerpen dat we hun competenties moeilijk kunnen inschatten.</li>
+          </ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span>
+          <ul>
+            <li>Studenten genereren tekst zonder kritische zin: ze lezen niet na en bouwen niet verder op de informatie.</li>
+            <li>Ze besteden visueel werk uit aan AI en zetten zichzelf buiten het creatieve proces. Het resultaat is generiek en zonder persoonlijke kwaliteit.</li>
+          </ul></div>
+      </div>
+
+      <h3 class="sub">Hoe studenten hun AI-gebruik verantwoorden</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva · GD2</span><p>Het proces moet zichtbaar zijn: hoe ben je tot dit resultaat gekomen?</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Tijdens feedbackmomenten vragen hoe bepaalde zaken tot stand kwamen.</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Een procesdocument met de sleutelmomenten in het ontwerpproces. De nadruk ligt op het verantwoorden van creatieve keuzes.</p></div>
+      </div>
+
+      <h3 class="sub">Wat ze nodig hebben</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span><p>Meer kennis en uitwisseling met collega's.</p></div>
+        <div class="card hans"><span class="tag">Hans</span><p>Goede afspraken, een duidelijke leerlijn en voor alle studenten genoeg credits op hetzelfde platform.</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Opleiding en uitwisseling als start.</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Meer licenties en ruimte om technologie te testen zonder ingewikkelde aanvraagprocedures. Vaste momenten om ervaring uit te wisselen in het docententeam.</p></div>
+      </div>
+    </div>
+  </div></details>
+
+  <details class="chap" id="briefings">
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 3</span><span>Briefings</span></div><h2 class="heavy">AI-proof briefings</h2><p class="gist">Het proces en mondeling toetsen winnen terrein. Met voorbeeldbriefings van Rik en Stijn.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Opdrachten waarbij AI-detectie geen zorg meer is.</p>
+    <div class="block">
+      <h3 class="sub">Kwetsbare opdrachten</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva · GD2</span><p>Concepten bedenken. Studenten zoeken te oppervlakkig en zijn snel tevreden, of verliezen uren zonder resultaat.</p></div>
+        <div class="card hans"><span class="tag">Hans</span><p>Beeldmontage met stockbeelden, en illustraties, mascottes en figuren tekenen. Die beelden kan AI nu ook maken.</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Lange dossiers, waarin de creatieve verantwoording vaak te veel uit AI komt. Voor veel studenten een vrijgeleide om die te laten schrijven.</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Eindopdracht expert track 2D Motion: een explainer van 1,5 minuut voor een breed publiek. De opdracht beschrijft alleen een eindproduct, en explainers zijn een gestandaardiseerd format dat AI al van onderwerp tot video kan maken.</p></div>
+      </div>
+
+      <h3 class="sub">Hoe je ze herschrijft</h3>
+      <div class="duo">
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul><li>Meer focus op de werkwijze, die ze moeten bewijzen.</li><li>Rush-opdrachten in de klas.</li></ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul><li>Mondeling toetsen: wie een keuze niet zelf maakte, kan er mondeling niet dieper op ingaan.</li><li>Studenten op pad sturen voor research, bijvoorbeeld naar een museum.</li><li>Duidelijk afbakenen wat mag: niet elk AI-gebruik is een probleem.</li></ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span>
+          <ul><li>De doelgroep superspecifiek maken: “breed publiek” nodigt uit tot het gemiddelde.</li><li>Verplicht persoonlijk of lokaal materiaal: zelf gefotografeerd, gefilmd, getekend of opgenomen.</li><li>Minder punten op het eindresultaat, meer op proces en procesverdediging.</li></ul></div>
+      </div>
+
+      <div class="card feature rik">
+        <span class="tag">Rik · voorbeeldbriefing</span>
+        <h3 style="font-size:clamp(24px,3.4vw,40px);margin-top:14px">Stel de line-up samen voor een fictief design&shy;festival</h3>
+        <p style="margin-top:14px" class="prose">Studenten bekijken het werk van 10 vormgevers of agencies en kiezen er 3 sprekers uit. Bij de volgende feedback gaat de docent in gesprek: welke talk heb je bekeken, welk interview gelezen, welk werk vond je goed, wat verbindt jouw drie sprekers? Zo krijg je zicht op wat de student echt drijft.</p>
+      </div>
+
+      <div class="card feature stijn">
+        <span class="tag">Stijn · voorbeeldbriefing</span>
+        <h3 style="font-size:clamp(24px,3.4vw,40px);margin-top:14px">Maak het beter dan de AI</h3>
+        <p style="margin-top:14px" class="prose">De docent genereert zelf een AI-oplossing voor een briefing. Studenten benoemen wat er goed en slecht aan is, maken daarna een betere versie en tonen aan waarom die beter is. AI is volledig toegelaten, net als alle andere tools. De nadruk ligt op keuzes verantwoorden en ontwerp beoordelen.</p>
+      </div>
+
+      <h3 class="sub">Strategieën</h3>
+      <div class="tbl-wrap"><table id="strat"></table></div>
+      <p class="note">AI-gebruik vermelden doen alle vier al. Een mondelinge verdediging doet Hans al, Rik en Stijn willen ze proberen. Rik vinkte bij “verworpen opties verantwoorden” zowel “doe ik al” als “wil ik proberen” aan.</p>
+
+      <h3 class="sub">Product tegenover proces in de evaluatie</h3>
+      <div class="bars" id="bars"></div>
+      <p class="note">Percentages zoals opgegeven. Waar ze niet optellen tot 100, is de rest gearceerd. Eva gaf geen cijfers: in InDesign tellen inzicht in het proces, het eindresultaat en snelheid; in GD2 weegt het proces zwaarder.</p>
+    </div>
+  </div></details>
+
+  <details class="chap" id="identiteit">
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 4</span><span>Identiteit</span></div><h2 class="heavy">Identiteit, toekomst, opleiding</h2><p class="gist">Technische kennis en business sense onderscheiden ons. Over wat erbij moet en wat eraf mag, verschillen de meningen.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Wie zijn we, wie heeft het werkveld nodig, en hoe brengen we studenten daar?</p>
+    <div class="block">
+      <h3 class="sub">Wat ons onderscheidt</h3>
+      <p class="prose">Eva, Hans en Rik noemen <strong>technische kennis</strong> het grootste verschil met verwante opleidingen. Hans combineert ze met creativiteit, Eva met inzicht in het hele productieproces. Stijn legt de nadruk elders: onze studenten hebben een beter besef van de professionele realiteit, meer <strong>business sense</strong>, en weten dat hun ontwerpen een strategie moeten dienen. Rik vindt dat we in technische kennis moeten blijven investeren, ook als dat betekent dat we AI-tools beter leren beheersen. Tegelijk ziet Rik het probleem:</p>
+      <blockquote class="rik"><p>AI kan pas zinvol ingezet worden als onze studenten een bredere kennis van het vakgebied hebben, en net daar knelt het. De learning curve vergt ‘kilometers op de teller’.</p><footer><span class="tag">Rik</span></footer></blockquote>
+
+      <h3 class="sub">Wat een GDM'er kan en een AI-tool niet</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span><p>Materiaal- en productiekennis: papier, druktechniek, afwerking, correct aanleveren. Gevoel voor vorm, typografie en teksthiërarchie.</p></div>
+        <div class="card hans"><span class="tag">Hans</span><p>Concepten bedenken (menselijkheid). Softwareproblemen die AI niet goed krijgt zelf oplossen.</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Met mensen werken: netwerken, je waarde verkopen, storytelling. “Mensen werken vooralsnog het liefst met mensen.”</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Een probleem vinden en kaderen. AI beantwoordt vragen; de student achterhaalt wat de echte vraag is. “Een opdrachtgever die ‘een filmpje’ vraagt, heeft misschien een ander probleem.”</p></div>
+      </div>
+      <blockquote class="rik big"><p>AI heeft nooit met een BMX gereden, is nooit verliefd geweest en is nooit weggeblazen door een eerste keer Aphex Twin op volume 1000.</p><footer><span class="tag">Rik</span></footer></blockquote>
+
+      <h3 class="sub">De ontwerper over vijf jaar</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span>
+          <ul>
+            <li>Schakelt snel en adviseert de klant, esthetisch, ecologisch en economisch.</li>
+            <li>Denkt out of the box, experimenteert, legt verbanden.</li>
+            <li>Creëert iets wat AI niet kan automatiseren.</li>
+          </ul></div>
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul>
+            <li>Heeft veel manuele kunde en kennis over kunst, geschiedenis en technieken.</li>
+            <li>Kan cureren, is heel kritisch en legt de lat hoog.</li>
+            <li>Is enorm goed in concepten bedenken en (laten) uitwerken.</li>
+          </ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul>
+            <li>Een problem-solver die analyseert en de vraag stelt die niemand anders stelt.</li>
+            <li>Zet tools in, maar denkt zelfstandig en maakt onderbouwde keuzes.</li>
+            <li>Daarvoor blijft een sterke vaktechnische opleiding essentieel.</li>
+          </ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span>
+          <ul>
+            <li>Kan selecteren en regisseren: beslissen welke van honderd opties klopt, en waarom.</li>
+            <li>Is technisch vloeiend zonder specialist te zijn: workflows bouwen, tools koppelen, een eenvoudig script maken.</li>
+            <li>Is strateeg en gesprekspartner: meer tijd met klanten, minder achter het scherm.</li>
+          </ul></div>
+      </div>
+      <blockquote class="eva"><p>Als je alles wat je weet van je klant in AI ingeeft, dan mag dat resultaat zeker niet het resultaat van de ontwerper zijn. Dan kan de klant het zelf ook.</p><footer><span class="tag">Eva</span></footer></blockquote>
+
+      <h3 class="sub">Taken die verdwijnen, veranderen of erbij komen</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th></th><th>Verdwijnt</th><th>Verandert</th><th>Komt erbij</th></tr></thead>
+        <tbody>
+          <tr class="hans"><td class="top"><span class="tag">Hans</span></td><td class="top">Puur technische jobs</td><td class="top">Lay-out, illustratie, motion, Photoshop, programmeren</td><td class="top">Cureren, AI-beelden bijschaven, kennis over technieken</td></tr>
+          <tr class="rik"><td class="top"><span class="tag">Rik</span></td><td class="top">Kleine productieopdrachten zonder creativiteit: klanten doen die nu al zelf</td><td class="top">Processen gaan sneller; AI als sparringpartner voor presentaties, strategie en research</td><td class="top">Up-to-date blijven en experimenteren</td></tr>
+          <tr class="stijn"><td class="top"><span class="tag">Stijn</span></td><td class="top">Repetitief productiewerk: formaatvarianten, resizes, campagnes uitrollen over kanalen</td><td class="top">Conceptontwikkeling: snel veel varianten verkennen en selecteren</td><td class="top">AI-workflows ontwerpen en beheren: pipelines, tools koppelen</td></tr>
+        </tbody></table></div>
+
+      <h3 class="sub">Signalen uit het werkveld</h3>
+      <div class="duo">
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul><li>AI is te duur.</li><li>AI is saai. Mensen zijn het nu al beu en smachten naar authenticiteit.</li><li>AI maakt veel dingen sneller en eenvoudiger en brengt nieuwe kansen.</li></ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul><li>Twee stagebedrijven die AI vooral audiovisueel inzetten: voor onze studenten is dat nog grotendeels een blinde vlek.</li></ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Kleinere stagebedrijven beginnen achterop te hinken en werken vaak nog erg traditioneel.</p></div>
+      </div>
+
+      <h3 class="sub">Wat erbij moet</h3>
+      <div class="duo">
+        <div class="card hans"><span class="tag">Hans</span>
+          <ul><li>Manuele technieken</li><li>Kunstgeschiedenis</li><li>Technieken, media en materialen</li><li>Kritisch met AI omspringen</li><li>AI-beelden verder bewerken</li></ul></div>
+        <div class="card rik"><span class="tag">Rik</span>
+          <ul><li>Soft skills en people skills</li><li>Een groter referentiekader (“dat kan je niet faken”)</li><li>Filosofisch denken en een meta-besef van het vak</li><li>Maar geen LUCA-studenten opleiden: ook technisch blijven bijsturen</li></ul></div>
+        <div class="card stijn"><span class="tag">Stijn</span>
+          <ul><li>Systemen ontwerpen in plaats van losse objecten: templates, merkregels en design systems waarmee AI verder kan.</li><li>Zelf vooraf de kwaliteitscriteria van een opdracht formuleren.</li></ul></div>
+      </div>
+
+      <h3 class="sub">Wat eraf mag</h3>
+      <div class="duo">
+        <div class="card hans"><span class="tag">Hans</span><p>Groepswerken, en aanvullende vakken die het bovenstaande in de weg zitten.</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Klassieke skills die AI overbodig maakt durven schrappen, mits duiding: weten welke skill AI vervangt blijft nodig. “Hoeveel Photoshop gaan we binnen 5 jaar nog nodig hebben?”</p></div>
+        <div class="card eva"><span class="tag">Eva</span><p>Schrap niet te veel van wat voor ons evident lijkt. Een eerstejaars heeft geen grafische, esthetische of softwarekennis.</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Softwaretraining als doel op zich herevalueren. Minder menu's overlopen en studenten uitdagen om zelf oplossingen te vinden. Wel veel aandacht voor de ambachtelijke onderbouw waar software uiteindelijk een oplossing voor biedt.</p></div>
+      </div>
+
+      <h3 class="sub">Wat hun vak het sterkst traint</h3>
+      <div class="duo">
+        <div class="card eva"><span class="tag">Eva</span><p>Inzicht in het proces, logisch nadenken, typografie, lay-out en teksthiërarchie. Kennis geeft studenten zelfvertrouwen.</p></div>
+        <div class="card hans"><span class="tag">Hans</span><p>GD3: research. GD4: eindproduct. Art Direction: concept en esthetiek.</p></div>
+        <div class="card rik"><span class="tag">Rik</span><p>Nieuwsgierigheid, referenties, introspectie, analoge skills en fouten durven maken. Daar zit creativiteit die AI nooit vindt.</p></div>
+        <div class="card stijn"><span class="tag">Stijn</span><p>Denken in tijd en aandacht: de aandacht van een kijker seconde per seconde sturen. Ritme, timing en hiërarchie in de tijd, een dramaturgisch denken dat AI-tools niet beheersen.</p></div>
+      </div>
+    </div>
+  </div></details>
+
+  <details class="chap" id="profiel">
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 5</span><span>Profiel</span></div><h2 class="heavy">Het beroeps&shy;profiel</h2><p class="gist">Unaniem een T-profiel. Concept, onderzoek en samenwerking staan bovenaan.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Op welke afgestudeerde mikken we?</p>
+    <div class="block">
+      <div class="duo">
+        <div class="card"><span class="meta">Generalist of specialist?</span>
+          <p class="big-words" style="font-size:clamp(34px,5vw,60px)">T-profiel</p>
+          <p style="font-weight:700;margin-top:6px">4 van 4 respondenten</p>
+          <p style="margin-top:8px">Rik leende het van een voetbalscout: een voldoende op alles en een excellent op één facet van het spel.</p></div>
+        <div class="card"><span class="meta">Jobtitels</span>
+          <ul>
+            <li><span class="tag hans">Hans</span> Art director, brand designer, crossmedia designer</li>
+            <li><span class="tag rik">Rik</span> Liever een profiel dan titels. Als dat de art director van de toekomst is, doen we het goed.</li>
+            <li><span class="tag stijn">Stijn</span> Motion designer, visual designer, creative lead, creative technologist</li>
+          </ul></div>
+      </div>
+
+      <h3 class="sub">Belangrijkste competenties</h3>
+      <div class="tbl-wrap"><table id="rank"></table></div>
+      <p class="note">Gesorteerd op gemiddelde plaats. Kritisch oordeel over AI-output loopt het verst uiteen: Stijn zet het op 1, Hans op 5, Rik op 7. Rik gaf twee keer een tussenrang (1.1 en 3.1); die zijn hier omgezet naar plaats 2 en 5. Ontbreekt volgens Hans: visuele geletterdheid, esthetisch inzicht en creatief vakmanschap. Eva rangschikte niet: in schijf 1 komt techniek eerst, in schijf 3 onderzoek en experiment.</p>
+
+      <h3 class="sub">De ideale afgestudeerde</h3>
+      <div class="duo">
+        <blockquote class="hans"><p>Een creatieve en kritische ontwerper met een sterke visuele, culturele en technische basis, die bewust analoge, digitale en AI-gestuurde technieken combineert.</p><footer><span class="tag">Hans</span></footer></blockquote>
+        <blockquote class="rik"><p>Een creatieve problem-solver die empathie combineert met communicatie, durft te experimenteren en weet dat het creatief proces, hoewel traag, een meerwaarde is als je fouten omarmt.</p><footer><span class="tag">Rik</span></footer></blockquote>
+        <blockquote class="stijn"><p>Een ontwerper die een vraag kan kaderen voor hij ze beantwoordt, en die met een eigen standpunt en een getraind oordeel kiest wat werkt voor een concreet publiek in een concrete context.</p><footer><span class="tag">Stijn</span></footer></blockquote>
+      </div>
+    </div>
+  </div></details>
+
+  <details class="chap" id="communicatie">
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 6</span><span>Communicatie</span></div><h2 class="heavy">Externe commu&shy;nicatie</h2><p class="gist">De mens voorop, AI als tool. Met zinnen per doelgroep.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <p class="q">Hoe vertellen we wie we zijn?</p>
+    <div class="block">
+      <h3 class="sub">De opleiding in één zin</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Voor</th><th><span class="tag rik">Rik</span></th><th><span class="tag stijn">Stijn</span></th></tr></thead>
+        <tbody>
+          <tr><td class="top"><strong>Scholier</strong></td><td>Hier leer je de wereld bekijken door een bril die geen computersysteem kan nadoen, en mensen raken met wat jij toevoegt.</td><td>Je leert ideeën omzetten in beelden, video’s, websites en drukwerk die mensen echt raken, en je leert zelf beslissen wat goed is, ook als AI de helft kan maken.</td></tr>
+          <tr><td class="top"><strong>Ouders</strong></td><td>In drie jaar bereiden we studenten voor op een wereld die steeds verandert, met de houding om waardevol te blijven.</td><td>Een praktijkgerichte bachelor die uw kleine opleidt tot ontwerper die creatief én technisch sterk is, en die leert werken met AI in plaats van erdoor vervangen te worden.</td></tr>
+          <tr><td class="top"><strong>Werkgever</strong></td><td>Onze studenten passen snel in bestaande productieprocessen, zijn nieuwsgierig genoeg om mee te evolueren en stellen de juiste vragen.</td><td>We leiden ontwerpers op die een briefing kunnen bevragen, met onderbouwd oordeel kiezen en regisseren, en vlot schakelen tussen print, scherm en beweging.</td></tr>
+        </tbody></table></div>
+      <blockquote class="hans"><p>Wij leiden ontwerpers op die verder kijken dan de uitvoering. Ze combineren creatief vakmanschap met technologie en AI, zonder ervan afhankelijk te zijn.</p><footer><span class="tag">Hans · voor alle drie de doelgroepen</span></footer></blockquote>
+
+      <div class="duo">
+        <div class="card"><span class="meta">Het beeld van GDM vandaag</span>
+          <ul><li><span class="tag hans">Hans</span> Sterk in techniek en software, breed inzetbaar en communicatief. Maar ook: niet erg kunstzinnig, slechte tekenaars, weinig eigenheid.</li>
+          <li><span class="tag rik">Rik</span> “Technische profielen.” Deels waar, maar geen collega wil zich daartoe beperken.</li>
+          <li><span class="tag stijn">Stijn</span> We hangen nog wat vast aan onze geschiedenis van ‘drukkerijschool’ en worden gezien als de minst creatieve van de lokale grafische opleidingen.</li></ul></div>
+        <div class="card"><span class="meta">AI zonder hype</span>
+          <ul><li><span class="tag hans">Hans</span> Uitleggen waar en hoe we AI inzetten, en het belang van alles daarnaast benadrukken.</li>
+          <li><span class="tag rik">Rik</span> Benoemen welke plek AI echt inneemt op de werkvloer: stap voor stap, als tool. Wie AI vandaag verrassend inzet, kon dat gisteren ook zonder.</li>
+          <li><span class="tag stijn">Stijn</span> Niet ontkennen dat AI de sector op zijn kop zet. Tonen hoe studenten AI gebruiken en waar ze zelf beslissen, met de nadruk op wat de ontwerper blijft doen.</li></ul></div>
+      </div>
+      <blockquote class="rik big"><p>Eens de surprise van AI wegebt, komt de mens terug boven.</p><footer><span class="tag">Rik</span></footer></blockquote>
+      <p class="note">Bewijsstukken: studentenwerk en cases uit het werkveld (Hans), bachelorproeven die empathie in zich dragen (Rik), projecten die proces en oordeel tonen, zoals een campagne met de verworpen varianten erbij (Stijn). Kanalen: Instagram en TikTok (Hans), socials en maatschappelijke projecten waar we luid over praten (Rik), Instagram en TikTok met kort studentenwerk en making-ofs, workshops op secundaire scholen en studentenambassadeurs (Stijn). Eva stelt voor om beeldvorming en kanalen aan de doelgroep zelf te vragen.</p>
+    </div>
+  </div></details>
+
+  <details class="chap" id="gesprek">
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 7</span><span>Gesprek</span></div><h2 class="heavy">Om te bespreken</h2><p class="gist">Zes thema's waar de antwoorden elkaar aanvullen of schuren.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <div class="themes">
+      <div class="theme"><h3>Wanneer komt AI in de leerlijn, en hoe beoordelen we dan?</h3>
+        <div class="cols">
+          <div class="eva"><span class="tag">Eva</span><p>Eerst de basis en het inzicht. In GD2 mag ontwerpen met AI nog niet.</p></div>
+          <div class="hans"><span class="tag">Hans</span><p>AI in schijf 2 doet de manuele technieken uit schijf 1 vergeten. Vraag om een duidelijke leerlijn.</p></div>
+          <div class="rik"><span class="tag">Rik</span><p>Jaar per jaar in kaart brengen: wat kan, wanneer, en hoe beoordelen we competenties.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>Meer punten op proces en procesverdediging. Studenten bepalen zelf vooraf de kwaliteitscriteria.</p></div>
+        </div></div>
+      <div class="theme"><h3>Verbieden of alles toelaten?</h3>
+        <div class="cols">
+          <div class="eva"><span class="tag">Eva</span><p>In GD2 mag ontwerpen met AI nog niet.</p></div>
+          <div class="hans"><span class="tag">Hans</span><p>Per opdracht afspreken welke onderdelen wel en niet met AI mogen.</p></div>
+          <div class="rik"><span class="tag">Rik</span><p>Duidelijk afbakenen wat mag: niet elk AI-gebruik is een probleem.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>In geselecteerde opdrachten AI 100% toelaten, en sturen op verantwoording van keuzes.</p></div>
+        </div></div>
+      <div class="theme"><h3>Schrappen of toevoegen?</h3>
+        <div class="cols">
+          <div class="eva"><span class="tag">Eva</span><p>Niet te veel schrappen: eerstejaars weten nog heel weinig.</p></div>
+          <div class="hans"><span class="tag">Hans</span><p>Manuele technieken en kunstgeschiedenis erbij; groepswerken minder.</p></div>
+          <div class="rik"><span class="tag">Rik</span><p>Skills die AI overbodig maakt durven schrappen, mits duiding. Liefst kort op de bal spelen.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>Softwaretraining herevalueren: minder menu's, meer zelf oplossingen zoeken, op een sterke ambachtelijke onderbouw. Systemen ontwerpen en eigen kwaliteitscriteria erbij.</p></div>
+        </div></div>
+      <div class="theme"><h3>Wat is de kern van het vak?</h3>
+        <div class="cols">
+          <div class="eva"><span class="tag">Eva</span><p>Procesinzicht en productiekennis, en de klant kunnen adviseren.</p></div>
+          <div class="hans"><span class="tag">Hans</span><p>Concept, cureren, esthetiek en manuele kunde.</p></div>
+          <div class="rik"><span class="tag">Rik</span><p>Probleemoplossend denken, empathie, storytelling en people skills.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>Een probleem kaderen, selecteren en regisseren, en verantwoorden waarom.</p></div>
+        </div></div>
+      <div class="theme"><h3>Mondeling toetsen als antwoord op AI?</h3>
+        <div class="cols">
+          <div class="hans"><span class="tag">Hans</span><p>Doet al mondelinge verdedigingen; in Expedition telt die voor 30 %.</p></div>
+          <div class="rik"><span class="tag">Rik</span><p>Wil meer mondeling: wie een keuze niet zelf maakte, kan er niet dieper op ingaan.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>Toetst vandaag niet mondeling, maar wil de verdediging proberen.</p></div>
+        </div></div>
+      <div class="theme"><h3>Welke naam?</h3>
+        <div class="cols">
+          <div class="rik"><span class="tag">Rik</span><p>Visual Design of Visual Communication Design, liefst Engels.</p></div>
+          <div class="hans"><span class="tag">Hans</span><p>Geen AI, communicatie of technology in de naam.</p></div>
+          <div class="stijn"><span class="tag">Stijn</span><p>Creative Media of Media Design &amp; Technology, in het Engels. Media als gemene deler, geen “grafisch”.</p></div>
+        </div></div>
+    </div>
+  </div></details>
+
+  <details class="chap" id="open" hidden>
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Bijlage</span><span>Dekking</span></div><h2 class="heavy">Wat nog open ligt</h2><p class="gist">Per vraag: wie al antwoordde. Naamvoorstellen, taal en de voorbeeldbriefing kregen de minste antwoorden.</p><span class="tog" aria-hidden="true"></span></summary>
+    <div class="chap-body">
+    <div class="cover-legend" id="cover-legend"></div>
+    <div class="cover" id="cover"></div>
+  </div></details>
+
+  <footer class="end">
+    <div class="tile t-white"><div class="corner meta"><span>Bron</span><span></span></div><p style="font-weight:600">Voorbereidende vragenlijst evolutie curriculum Crossmedia Design</p></div>
+    <div class="tile t-orange"><div class="corner meta"><span>Opleiding</span><span></span></div><p style="font-weight:600">Grafische en Digitale Media · Arteveldehogeschool</p></div>
+    <div class="tile dark"><div class="corner meta"><span>Stand</span><span></span></div><p class="heavy" style="font-size:28px" id="foot-count"></p></div>
+  </footer>
+</div>
+
+<script id="data" type="application/json">
+{
+  "total": 19,
+  "people": ["eva", "hans", "rik", "stijn"],
+  "names": { "eva": "Eva", "hans": "Hans", "rik": "Rik", "stijn": "Stijn" },
+  "aiLevel": { "eva": 1, "hans": 2, "rik": 1, "stijn": 2 },
+  "aiLevels": ["Niet", "Af en toe, ad hoc", "In enkele opdrachten", "Structureel, in de meeste opdrachten"],
+  "ways": [
+    ["Toont of leert AI-tools in de les", 1, 1, 0, 1],
+    ["Studenten mogen AI gebruiken in opdrachten", 0, 1, 1, 1],
+    ["AI is een verplicht onderdeel van opdrachten", 0, 1, 0, 0],
+    ["AI is in bepaalde opdrachten niet toegelaten", 1, 1, 1, 0],
+    ["Bespreekt AI kritisch (ethiek, auteurschap, impact)", 0, 1, 1, 1],
+    ["Gebruikt AI zelf voor lesvoorbereiding of feedback", 0, 1, 1, 1]
+  ],
+  "strategies": [
+    ["Een echte opdrachtgever, publiek of context", "", "al", "wil", "al"],
+    ["Een standpunt vragen in plaats van een deliverable", "", "niet", "wil", "wil"],
+    ["Verworpen opties laten verantwoorden", "", "wil", "al", "al"],
+    ["Een onverwachte wending tijdens de opdracht", "", "al", "wil", "wil"],
+    ["Het proces beoordelen, niet enkel het eindresultaat", "", "al", "al", "al"],
+    ["Een verplichte mondelinge verdediging", "", "al", "wil", "wil"],
+    ["AI-gebruik vermelden zoals een bronvermelding", "al", "al", "al", "al"],
+    ["Co-creatie of peer feedback", "", "al", "wil", "wil"]
+  ],
+  "evaluation": [
+    { "who": "hans", "vak": "GD3", "product": 50, "proces": 40, "mondeling": 0, "remark": "Veranderen? Misschien." },
+    { "who": "hans", "vak": "GD4", "product": 80, "proces": 15, "mondeling": 0, "remark": "Veranderen? Misschien." },
+    { "who": "hans", "vak": "Expedition", "product": 30, "proces": 30, "mondeling": 30, "remark": "" },
+    { "who": "hans", "vak": "Art Direction", "product": 100, "proces": 0, "mondeling": 0, "remark": "Eindproduct en mondelinge verdediging samen als één totaalpunt. Veranderen? Nee.", "joint": true },
+    { "who": "rik", "vak": "Eigen vakken", "product": 30, "proces": 50, "mondeling": 0, "remark": "Veranderen? Ja, meer mondeling." },
+    { "who": "stijn", "vak": "Eigen vakken", "product": 70, "proces": 30, "mondeling": 0, "remark": "Veranderen? Ja." }
+  ],
+  "competences": [
+    ["Conceptueel denken en betekenis geven", { "hans": 1, "rik": 1, "stijn": 2 }],
+    ["Onderzoek, experiment en zelfstandig bijleren", { "hans": 2, "rik": 2, "stijn": 3 }],
+    ["Samenwerking en communicatie met opdrachtgevers en teams", { "hans": 3, "rik": 3, "stijn": 4 }],
+    ["Technische uitvoering en softwarebeheersing", { "hans": 6, "rik": 4, "stijn": 8 }],
+    ["Kritisch oordeel over (AI-)output", { "hans": 5, "rik": 7, "stijn": 1 }],
+    ["Crossmediaal denken over print, digitaal en beweging", { "hans": 4, "rik": 8, "stijn": 5 }],
+    ["Productiekennis en workflows", { "hans": 7, "rik": 6, "stijn": 7 }],
+    ["Ethisch bewustzijn en maatschappelijke verantwoordelijkheid", { "hans": 8, "rik": 5, "stijn": 6 }]
+  ],
+  "coverage": [
+    ["1.1 Dekt de naam de lading?", 0, 1, 1, 1], ["1.2 Naamvoorstellen", 0, 0, 1, 1], ["1.3 Woorden wel / niet", 0, 1, 1, 1], ["1.4 Nederlands of Engels", 0, 0, 1, 1],
+    ["2.1 Hoeveel AI", 1, 1, 1, 1], ["2.2 Op welke manier", 1, 1, 1, 1], ["2.3 Tools", 1, 1, 1, 1], ["2.4 Goede praktijken", 1, 1, 1, 1],
+    ["2.5 Slechte praktijken", 1, 1, 1, 1], ["2.6 Verantwoording AI-gebruik", 1, 0, 1, 1], ["2.7 Wat nodig is", 1, 1, 1, 1],
+    ["3.1 Kwetsbare opdracht", 1, 1, 1, 1], ["3.2 Opdracht herschrijven", 0, 1, 1, 1], ["3.3 Strategieën", 1, 1, 1, 1], ["3.4 Product / proces", 1, 1, 1, 1], ["3.5 Voorbeeldbriefing", 0, 0, 1, 1],
+    ["4.1 Verschil met verwante opleidingen", 1, 1, 1, 1], ["4.2 Wat AI niet kan", 1, 1, 1, 1], ["4.3 Ontwerper over 5 jaar", 1, 1, 1, 1], ["4.4 Taken die veranderen", 0, 1, 1, 1],
+    ["4.5 Signalen werkveld", 0, 1, 1, 1], ["4.6 Wat ontbreekt", 0, 1, 1, 1], ["4.7 Wat mag minder", 1, 1, 1, 1], ["4.8 Houding die je vak traint", 1, 1, 1, 1],
+    ["5.1 Jobtitels", 0, 1, 1, 1], ["5.2 Ideale afgestudeerde", 1, 1, 1, 1], ["5.3 Competenties rangschikken", 0, 1, 1, 1], ["5.4 Generalist of specialist", 1, 1, 1, 1],
+    ["6.1 Opleiding in één zin", 0, 1, 1, 1], ["6.2 Beeld van GDM", 0, 1, 1, 1], ["6.3 AI zonder hype", 0, 1, 1, 1], ["6.4 Bewijsstukken", 0, 1, 1, 1], ["6.5 Kanalen", 0, 1, 1, 1],
+    ["7.1 Op tafel in het gesprek", 1, 1, 1, 0]
+  ]
+}
+</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var P = D.people;
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function tag(p) { return '<span class="tag ' + p + '">' + D.names[p] + '</span>'; }
+
+  // Voortgang
+  document.getElementById('n-in').textContent = P.length;
+  document.getElementById('n-total').textContent = D.total;
+  document.getElementById('foot-count').textContent = P.length + ' van ' + D.total;
+  var prog = document.getElementById('progress');
+  for (var i = 0; i < D.total; i++) prog.appendChild(el('i', i < P.length ? 'on' : ''));
+
+  // 2.1 schaal
+  var scale = document.getElementById('scale');
+  D.aiLevels.forEach(function (label, i) {
+    var who = P.filter(function (p) { return D.aiLevel[p] === i; });
+    var s = el('div', 'step' + (who.length ? ' hit' : ''));
+    s.appendChild(el('span', 'dot'));
+    s.appendChild(el('span', 't', label));
+    s.appendChild(el('div', 'who', who.map(tag).join('')));
+    scale.appendChild(s);
+  });
+
+  // 2.2 manieren
+  function head(first) { return '<thead><tr><th>' + first + '</th>' + P.map(function (p) { return '<th class="c">' + tag(p) + '</th>'; }).join('') + '</tr></thead>'; }
+  document.getElementById('ways').innerHTML = head('Manier') + '<tbody>' + D.ways.map(function (r) {
+    return '<tr><td>' + r[0] + '</td>' + P.map(function (p, j) {
+      return '<td class="c ' + p + '"><span class="mark' + (r[j + 1] ? ' on' : '') + '" aria-label="' + (r[j + 1] ? 'ja' : 'nee') + '"></span></td>';
+    }).join('') + '</tr>';
+  }).join('') + '</tbody>';
+
+  // 3.3 strategieën
+  var lab = { al: 'doe ik al', wil: 'wil proberen', niet: 'niet zinvol', '': '—' };
+  document.getElementById('strat').innerHTML = head('Strategie') + '<tbody>' + D.strategies.map(function (r) {
+    return '<tr><td>' + r[0] + '</td>' + P.map(function (p, j) {
+      var v = r[j + 1];
+      return '<td class="c ' + p + '"><span class="chip ' + (v || 'leeg') + '">' + lab[v] + '</span></td>';
+    }).join('') + '</tr>';
+  }).join('') + '</tbody>';
+
+  // 3.4 balken
+  var bars = document.getElementById('bars');
+  bars.appendChild(el('div', 'legend', '<span><i style="background:#000"></i>Eindproduct</span><span><i style="background:var(--blue)"></i>Proces</span><span><i style="background:var(--pink)"></i>Mondelinge verdediging</span><span><i style="background:repeating-linear-gradient(135deg,transparent 0 3px,#999 3px 4px)"></i>Niet verdeeld</span>'));
+  D.evaluation.forEach(function (r) {
+    var row = el('div', 'brow');
+    row.appendChild(el('div', 'name', tag(r.who) + '<span>' + r.vak + '</span>'));
+    var st = el('div', 'stack');
+    st.setAttribute('role', 'img');
+    st.setAttribute('aria-label', D.names[r.who] + ', ' + r.vak + ': eindproduct ' + r.product + '%, proces ' + r.proces + '%, mondeling ' + r.mondeling + '%');
+    [['product', 'seg-p', r.joint ? 'product + mondeling 100%' : null], ['proces', 'seg-r'], ['mondeling', 'seg-m']].forEach(function (s) {
+      var v = r[s[0]]; if (!v) return;
+      var d = el('div', s[1], s[2] || v + '%'); d.style.width = v + '%'; st.appendChild(d);
+    });
+    row.appendChild(st);
+    if (r.remark) row.appendChild(el('div', 'remark', r.remark));
+    bars.appendChild(row);
+  });
+
+  // 5.3 competenties: alleen wie rangschikte, gesorteerd op gemiddelde plaats
+  var rankers = P.filter(function (p) { return D.competences.some(function (c) { return c[1][p]; }); });
+  var rows = D.competences.map(function (c) {
+    var v = rankers.map(function (p) { return c[1][p]; });
+    return { name: c[0], r: c[1], avg: v.reduce(function (a, b) { return a + b; }, 0) / v.length };
+  }).sort(function (a, b) { return a.avg - b.avg; });
+  document.getElementById('rank').innerHTML = '<thead><tr><th>Competentie</th>' + rankers.map(function (p) { return '<th class="c">' + tag(p) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+    rows.map(function (r, i) {
+      return '<tr class="' + (i < 3 ? 'top3' : '') + '"><td>' + r.name + '</td>' + rankers.map(function (p) {
+        return '<td class="c ' + p + '"><span class="rk">' + r.r[p] + '</span></td>';
+      }).join('') + '</tr>';
+    }).join('') + '</tbody>';
+
+  // Dekking
+  document.getElementById('cover-legend').innerHTML = P.map(tag).join('');
+  document.getElementById('cover').innerHTML = D.coverage.map(function (r) {
+    var any = r.slice(1).some(Boolean);
+    return '<div class="cov' + (any ? '' : ' none') + '"><span>' + r[0] + '</span><span class="d">' +
+      P.map(function (p, j) { return '<i class="' + (r[j + 1] ? 'on' : '') + '" style="--c:var(--' + p + ')" title="' + D.names[p] + '"></i>'; }).join('') +
+      '</span></div>';
+  }).join('');
+
+  // Hoofdstukken: inhoudstafel, openen en sluiten
+  var chaps = document.querySelectorAll('details.chap:not([hidden])');
+  var toc = document.getElementById('toc');
+  chaps.forEach(function (d) {
+    var li = el('li');
+    var nr = d.querySelector('.corner span').textContent.match(/\d+/);
+    var a = el('a', '', '<span class="n">' + (nr ? nr[0].padStart(2, '0') : '→') + '</span><span>' + d.querySelector('h2').textContent.replace(/­/g, '') + '</span>');
+    a.href = '#' + d.id;
+    li.appendChild(a); toc.appendChild(li);
+  });
+  chaps.forEach(function (d) {
+    var b = el('button', 'chap-close', 'Hoofdstuk sluiten');
+    b.type = 'button';
+    b.addEventListener('click', function () { d.open = false; d.scrollIntoView({ block: 'nearest' }); });
+    d.querySelector('.chap-body').appendChild(b);
+  });
+  function setAll(open) { chaps.forEach(function (d) { d.open = open; }); }
+  document.getElementById('open-all').addEventListener('click', function () { setAll(true); });
+  document.getElementById('close-all').addEventListener('click', function () { setAll(false); });
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    var d = id && document.getElementById(id);
+    if (d && d.tagName === 'DETAILS') { d.open = true; d.scrollIntoView(); }
+  }
+  toc.addEventListener('click', function (e) {
+    var a = e.target.closest('a'); if (!a) return;
+    var d = document.getElementById(a.getAttribute('href').slice(1));
+    if (d) { e.preventDefault(); d.open = true; d.scrollIntoView({ behavior: 'smooth' }); }
+  });
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+})();
+</script>
