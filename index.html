@@ -67,6 +67,16 @@ p { margin: 0; }
 .duo.names { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 620px) { .duo.names { grid-template-columns: minmax(0, 1fr); } }
 
+/* Zwevende navigatie */
+.topnav { position: sticky; top: 0; z-index: 50; background: var(--black); padding-block: 6px; }
+.topnav ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.topnav ol::-webkit-scrollbar { display: none; }
+.topnav li { flex: 1 0 auto; }
+.topnav a { display: block; text-align: center; white-space: nowrap; color: var(--white); text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; line-height: 1.2; padding: 8px 10px 7px; background: var(--coal); }
+.topnav a:hover { color: var(--orange); }
+.topnav a[aria-current="true"] { background: var(--white); color: #000; }
+.chap { scroll-margin-top: 54px; }
+
 /* Slug */
 .slug { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 16px 10px; color: var(--muted); }
 
@@ -267,6 +277,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
 </style>
 
 <div class="wrap" lang="nl">
+  <nav class="topnav" aria-label="Snel naar een hoofdstuk"><ol id="topnav"></ol></nav>
   <div class="slug meta">
     <span>GDM · Arteveldehogeschool</span>
     <span>Voorbereidende vragenlijst</span>
@@ -1122,6 +1133,35 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     b.addEventListener('click', function () { d.open = false; d.scrollIntoView({ block: 'nearest' }); });
     d.querySelector('.chap-body').appendChild(b);
   });
+  // Zwevende navigatie
+  var shortNames = { kern: 'Samenvatting', wie: 'Wie', naam: 'Naam', ai: 'AI', briefings: 'Briefings', identiteit: 'Identiteit', profiel: 'Profiel', communicatie: 'Communicatie', gesprek: 'Gesprek' };
+  var topnav = document.getElementById('topnav');
+  chaps.forEach(function (d) {
+    var li = el('li'), a = el('a', '', shortNames[d.id] || d.id);
+    a.href = '#' + d.id;
+    li.appendChild(a); topnav.appendChild(li);
+  });
+  topnav.addEventListener('click', function (e) {
+    var a = e.target.closest('a'); if (!a) return;
+    var d = document.getElementById(a.getAttribute('href').slice(1));
+    if (d) { e.preventDefault(); d.open = true; d.scrollIntoView({ behavior: 'smooth' }); }
+  });
+  var navLinks = topnav.querySelectorAll('a'), navCur = -1, navTick = false;
+  function markNav() {
+    navTick = false;
+    var cur = -1;
+    chaps.forEach(function (d, i) { if (d.getBoundingClientRect().top <= 80) cur = i; });
+    if (cur === navCur) return;
+    navCur = cur;
+    navLinks.forEach(function (a, i) { if (i === cur) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    if (cur >= 0) {
+      var a = navLinks[cur];
+      topnav.scrollLeft = a.offsetLeft - topnav.offsetLeft - (topnav.clientWidth - a.offsetWidth) / 2;
+    }
+  }
+  window.addEventListener('scroll', function () { if (!navTick) { navTick = true; requestAnimationFrame(markNav); } }, { passive: true });
+  markNav();
+
   function setAll(open) { chaps.forEach(function (d) { d.open = open; }); }
   document.getElementById('open-all').addEventListener('click', function () { setAll(true); });
   document.getElementById('close-all').addEventListener('click', function () { setAll(false); });
