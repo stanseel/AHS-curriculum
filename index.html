@@ -47,6 +47,7 @@ p { margin: 0; }
 .meta { font-family: var(--font-body); font-size: 10px; font-weight: 500; line-height: 1.2; text-transform: uppercase; letter-spacing: .04em; }
 .prose { max-width: 64ch; }
 .note { font-size: 15px; color: var(--muted); max-width: 72ch; }
+.note a { color: inherit; }
 
 /* Tegels: elke tegel zet zijn eigen tekstkleuren */
 .tile { position: relative; padding: 18px 20px; min-width: 0; background: var(--bg, var(--white)); color: var(--ink); }
@@ -60,6 +61,9 @@ p { margin: 0; }
 .corner span:nth-child(2) { text-align: right; }
 
 .tag { display: inline-flex; align-items: center; font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; padding: 3px 7px 2px; white-space: nowrap; line-height: 1.3; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.tags .tag { white-space: normal; }
+.card.wide { grid-column: 1 / -1; }
 
 /* Slug */
 .slug { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 16px 10px; color: var(--muted); }
@@ -225,7 +229,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   <div class="slug meta">
     <span>GDM · Arteveldehogeschool</span>
     <span>Voorbereidende vragenlijst</span>
-    <span>Tussenstand 05.11.2026</span>
+    <span>Tussenstand 06.11.2026</span>
   </div>
 
   <header class="hero">
@@ -263,17 +267,17 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     <summary class="sec-head tile t-orange"><div class="corner meta"><span>→ Samenvatting</span><span>Crossmedia Design morgen</span></div><h2 class="heavy">Wat nu al opvalt</h2><p class="gist">Zes punten waarin de antwoorden samenkomen.</p><span class="tog" aria-hidden="true"></span></summary>
     <div class="chap-body">
     <ul class="keys">
-      <li><strong>AI is een hulpmiddel</strong><span>Alle vier willen dat de ontwerper zelf denkt en kiest. AI mag helpen in elke stap, maar mag geen vertrekpunt, eindpunt of “surrogaat voor verworven kennis” worden.</span></li>
+      <li><strong>AI is een hulpmiddel</strong><span>Alle vijf willen dat de ontwerper zelf denkt en kiest. AI mag helpen in elke stap, maar mag geen vertrekpunt, eindpunt of “surrogaat voor verworven kennis” worden.</span></li>
       <li><strong>Studenten leunen te hard op AI</strong><span>Ze nemen beelden klakkeloos over, laten dossiers schrijven en zien niet wanneer iets ondermaats is. Daardoor wordt het moeilijk om hun echte competenties in te schatten.</span></li>
       <li><strong>Eerst het vak, dan de tool</strong><span>Wie geen referentiekader heeft, gebruikt AI als omweg. Techniek, inzicht en “kilometers op de teller” moeten eerst komen.</span></li>
-      <li><strong>Concept, onderzoek, samenwerking</strong><span>Hans en Rik kwamen los van elkaar op exact dezelfde top drie. Stijn zet concept en onderzoek ook op 1 en 2, maar kritisch oordeel over AI-output op 3 en samenwerking op 4.</span></li>
+      <li><strong>Concept, onderzoek, samenwerking</strong><span>Iedereen die rangschikte zet concept op 1. Hans en Rik kwamen los van elkaar op exact dezelfde top drie. Stijn en Pieter ruilen samenwerking in voor kritisch oordeel over AI-output.</span></li>
       <li><strong>Een T-profiel, unaniem</strong><span>Een brede basis met één verdieping. Specialisaties veranderen te snel om er de opleiding op te bouwen.</span></li>
       <li><strong>Vraag naar afspraken</strong><span>Een leerlijn AI per jaar: wat kan, wanneer, en hoe we competenties beoordelen. Plus vorming, licenties en overleg tussen collega's.</span></li>
     </ul>
   </div></details>
 
   <details class="chap" id="wie">
-    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 0</span><span>Respondenten</span></div><h2 class="heavy">Wie antwoordde</h2><p class="gist">Eva (schijf 1), Hans en Stijn (schijf 2 en 3) en Rik.</p><span class="tog" aria-hidden="true"></span></summary>
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 0</span><span>Respondenten</span></div><h2 class="heavy">Wie antwoordde</h2><p class="gist">Eva (schijf 1), Hans en Stijn (schijf 2 en 3), Pieter (schijf 1 en 3) en Rik.</p><span class="tog" aria-hidden="true"></span></summary>
     <div class="chap-body">
     <div class="people">
       <article class="person eva">
@@ -296,15 +300,20 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <h3>Stijn Anseel</h3>
         <p>2D Motion Design, Expert track motion design, Graphic Design VT, Afstudeerproject, stagebegeleiding</p>
       </article>
+      <article class="person pieter">
+        <div class="corner meta"><span>Schijf 1 en 3</span><span>Respondent</span></div>
+        <h3>Pieter Langeraert</h3>
+        <p>GD1, GD2, Illustrator, Photoshop, afstudeerprojecten</p>
+      </article>
     </div>
   </div></details>
 
   <details class="chap" id="naam">
-    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 1</span><span>Naam</span></div><h2 class="heavy">Een nieuwe naam</h2><p class="gist">GDM dekt de lading gedeeltelijk. Nu vier voorstellen, rond ‘design’, ‘visual’ of ‘media’.</p><span class="tog" aria-hidden="true"></span></summary>
+    <summary class="sec-head tile t-orange"><div class="corner meta"><span>Hoofdstuk 1</span><span>Naam</span></div><h2 class="heavy">Een nieuwe naam</h2><p class="gist">GDM dekt de lading gedeeltelijk. Vier voorstellen, en Media Design &amp; Technology kwam twee keer terug.</p><span class="tog" aria-hidden="true"></span></summary>
     <div class="chap-body">
     <p class="q">Dekt ‘Grafische en Digitale Media’ nog de lading?</p>
     <div class="block">
-      <p class="prose">Hans, Rik en Stijn vinden dat de naam de lading <strong>gedeeltelijk</strong> dekt. Volgens Rik klinkt GDM vooral als wat de opleiding nu is, terwijl we evolueren naar een profiel dat breder inzetbaar is. Stijn vond de relatie tussen ‘digitaal’ en ‘grafisch’ altijd moeilijk: het hele grafische proces is al decennia digitaal. Eva gaf geen antwoord op dit deel.</p>
+      <p class="prose">Hans, Rik, Stijn en Pieter vinden dat de naam de lading <strong>gedeeltelijk</strong> dekt. Volgens Rik klinkt GDM vooral als wat de opleiding nu is, terwijl we evolueren naar een profiel dat breder inzetbaar is. Stijn vond de relatie tussen ‘digitaal’ en ‘grafisch’ altijd moeilijk: het hele grafische proces is al decennia digitaal. Pieter vindt dat de naam vooral media en middelen benoemt, terwijl de opleiding draait om ontwerpen, communiceren en betekenis geven. Tegelijk leiden we ook technisch op, anders dan het kunstonderwijs. Eva gaf geen antwoord op dit deel.</p>
       <div class="duo">
         <div class="card feature rik"><span class="tag">Rik · naamvoorstellen</span>
           <p class="big-words">Visual Design</p>
@@ -314,14 +323,17 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <p class="big-words">Creative Media</p>
           <p class="big-words">Media Design &amp; Techno&shy;logy</p>
           <p style="margin-top:12px">Creative Media is breed genoeg en wordt in andere landen al gebruikt. Media Design &amp; Technology benoemt de twee uiterste polen: alles wat we aanbieden zit daartussen.</p></div>
-        <div class="card"><span class="meta">Zeker wel</span>
-          <p class="big-words small">design · visual · media</p>
-          <p style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag rik">Rik: design, visual</span><span class="tag stijn">Stijn: media</span></p>
+        <div class="card feature pieter"><span class="tag">Pieter · richting</span>
+          <p class="big-words">Media Design &amp; Techno&shy;logy</p>
+          <p style="margin-top:12px">Geen concreet voorstel: een naam moet uit het curriculum komen, met inzichten van buitenaf. Wel deze richting: van visuele communicatie tot interactieve en ruimtelijke ervaringen.</p></div>
+        <div class="card wide"><span class="meta">Zeker wel</span>
+          <p class="big-words small">design · visual · media · technology · creative · experience · sign</p>
+          <p class="tags"><span class="tag rik">Rik: design, visual</span><span class="tag stijn">Stijn: media</span><span class="tag pieter">Pieter: media, design, technology, creative, experience, sign, visual</span></p>
           <span class="meta" style="margin-top:20px">Zeker niet</span>
           <p class="big-words small">technology · communicatie · AI · grafisch</p>
-          <p style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span class="tag hans">Hans: AI, communicatie, technology</span><span class="tag rik">Rik: technology, communication</span><span class="tag stijn">Stijn: graphic, grafische</span></p></div>
+          <p class="tags"><span class="tag hans">Hans: AI, communicatie, technology</span><span class="tag rik">Rik: technology, communication</span><span class="tag stijn">Stijn: graphic, grafische</span><span class="tag pieter">Pieter: grafisch</span></p></div>
       </div>
-      <p class="note">Taal: Stijn kiest Engels, omdat je dan je blik ruimer richt dan het lokale landschap. Rik vinkte zowel Engelstalig als “maakt niet uit” aan: veel opleidingen kiezen een Engelse naam, ook voor internationalisering. Opvallend: Rik wil “communication” liever niet in de naam, maar het tweede voorstel van Rik bevat het wel. En “technology” uit het tweede voorstel van Stijn staat bij Hans en Rik op de nee-lijst.</p>
+      <p class="note">Taal: Stijn kiest Engels, omdat je dan je blik ruimer richt dan het lokale landschap. Rik vinkte zowel Engelstalig als “maakt niet uit” aan: veel opleidingen kiezen een Engelse naam, ook voor internationalisering. Voor Pieter maakt het niet uit. Opvallend: Rik wil “communication” liever niet in de naam, maar het tweede voorstel van Rik bevat het wel. En “technology”, dat Stijn en Pieter belangrijk vinden, staat bij Hans en Rik op de nee-lijst. ‘Grafisch’ is volgens Pieter momenteel te veel aan papier gelinkt.</p>
     </div>
   </div></details>
 
@@ -335,7 +347,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
 
       <h3 class="sub">Op welke manier?</h3>
       <div class="tbl-wrap"><table id="ways"></table></div>
-      <p class="note">Hans gebruikt AI op alle manieren. Eva en Rik verbieden het in bepaalde opdrachten en gebruiken het minder breed. Stijn vinkte geen verbod aan en maakt AI nergens verplicht, maar laat het alleen in geselecteerde opdrachten 100% toe. Hans, Rik en Stijn gebruiken AI zelf om hun lessen voor te bereiden.</p>
+      <p class="note">Hans gebruikt AI op alle manieren. Eva en Rik verbieden het in bepaalde opdrachten en gebruiken het minder breed. Pieter doet alles behalve AI verplichten, en verbiedt het ook in bepaalde opdrachten. Stijn vinkte geen verbod aan en maakt AI nergens verplicht, maar laat het alleen in geselecteerde opdrachten 100% toe. Hans, Rik, Stijn en Pieter gebruiken AI zelf om hun lessen voor te bereiden.</p>
 
       <h3 class="sub">Welke tools, waarvoor?</h3>
       <div class="duo">
@@ -361,6 +373,12 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
             <li><strong>Claude</strong>: planningsdocumenten en materiaal voor de lesorganisatie.<span class="by">Docent</span></li>
             <li><strong>ChatGPT, Claude</strong>: copywriting voor 2D Motion projecten.</li>
           </ul></div>
+        <div class="card pieter"><span class="tag">Pieter</span>
+          <ul>
+            <li><strong>Generatieve AI</strong>: ideeën, sparren, research.<span class="by">Docent en student</span></li>
+            <li><strong>Generatieve AI</strong>: beelden genereren, tekst‘vulling’ van dossiers.<span class="by">Student</span></li>
+            <li><strong>Binnen Adobe</strong>: snelheid, niet efficiëntie.<span class="by">Docent en student</span></li>
+          </ul></div>
       </div>
 
       <h3 class="sub">Wanneer AI een meerwaarde is</h3>
@@ -369,6 +387,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <blockquote class="hans"><p>Spreek per opdracht af welke onderdelen wel en niet met AI mogen.</p><footer><span class="tag">Hans</span></footer></blockquote>
         <blockquote class="rik"><p>Ik integreer een slide over AI in de briefing om af te bakenen wat kan en wat niet.</p><footer><span class="tag">Rik</span></footer></blockquote>
         <blockquote class="stijn"><p>Studenten kunnen als kritische art director op basis van een goed gecureerd moodboard fotografie op maat voor hun project genereren via AI.</p><footer><span class="tag">Stijn</span></footer></blockquote>
+        <blockquote class="pieter"><p>Een grafisch sterke student kan sneller een interactieve toepassing testen. Technische studenten kunnen meer visuele richtingen verkennen. Onze profielen kunnen zo dichter bij elkaar komen.</p><footer><span class="tag">Pieter</span></footer></blockquote>
       </div>
       <p class="note">Stijn laat studenten ook scripts genereren voor complexe animaties. De basisskill is dan een complexe animatie beschrijven en ontleden in eenvoudige onderdelen.</p>
 
@@ -395,6 +414,11 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
             <li>Studenten genereren tekst zonder kritische zin: ze lezen niet na en bouwen niet verder op de informatie.</li>
             <li>Ze besteden visueel werk uit aan AI en zetten zichzelf buiten het creatieve proces. Het resultaat is generiek en zonder persoonlijke kwaliteit.</li>
           </ul></div>
+        <div class="card pieter"><span class="tag">Pieter</span>
+          <ul>
+            <li>Typografische AI-output wordt uit luiheid kant-en-klaar ingezet, terwijl de student net zelf typografische keuzes moet leren maken.</li>
+            <li>De beoordeling mag niet langer louter op output focussen, ook niet in hogere jaren. Richting geven, kritisch selecteren, bijsturen en verantwoorden moeten we expliciet benoemen.</li>
+          </ul></div>
       </div>
 
       <h3 class="sub">Hoe studenten hun AI-gebruik laten verantwoorden</h3>
@@ -402,6 +426,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card eva"><span class="tag">Eva · GD2</span><p>Het proces moet zichtbaar zijn: hoe ben je tot dit resultaat gekomen?</p></div>
         <div class="card rik"><span class="tag">Rik</span><p>Tijdens feedbackmomenten vragen hoe bepaalde zaken tot stand kwamen.</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Een procesdocument met de sleutelmomenten in het ontwerpproces. De nadruk ligt op het verantwoorden van creatieve keuzes.</p></div>
+        <div class="card pieter"><span class="tag">Pieter · GD1 en GD2</span><p>Een productiedossier waarin studenten hun stappen toelichten en hun ontwerpbeslissingen expliciet maken. Ze volgen een uniforme werkwijze, en die stappen wegen zwaarder door dan het resultaat.</p></div>
       </div>
 
       <h3 class="sub">Wat collega's nodig hebben</h3>
@@ -410,6 +435,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card hans"><span class="tag">Hans</span><p>Goede afspraken, een duidelijke leerlijn en voor alle studenten genoeg credits op hetzelfde platform.</p></div>
         <div class="card rik"><span class="tag">Rik</span><p>Opleiding en uitwisseling als start.</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Meer licenties en ruimte om technologie te testen zonder ingewikkelde aanvraagprocedures. Vaste momenten om ervaring uit te wisselen in het docententeam.</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>Alles: tijd, vorming, licenties, gedeelde afspraken en uitwisseling met collega's. Meer overleg binnen CMD, ook om ons intern en extern sterker te profileren.</p></div>
       </div>
     </div>
   </div></details>
@@ -425,6 +451,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card hans"><span class="tag">Hans</span><p>Beeldmontage met stockbeelden, en illustraties, mascottes en figuren tekenen. Die beelden kan AI nu ook maken.</p></div>
         <div class="card rik"><span class="tag">Rik</span><p>Lange dossiers, waarin de creatieve verantwoording vaak te veel uit AI komt. Voor veel studenten een vrijgeleide om die te laten schrijven.</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Eindopdracht expert track 2D Motion: een explainer van 1,5 minuut voor een breed publiek. De opdracht beschrijft alleen een eindproduct, en explainers zijn een gestandaardiseerd format dat AI al van onderwerp tot video kan maken.</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>Elke opdracht waarbij het resultaat alleen volstaat om te slagen, of waarbij onze goedbedoelde briefing eigenlijk al genoeg input bevat voor een goede prompt.</p></div>
       </div>
 
       <h3 class="sub">Hoe je ze herschrijft</h3>
@@ -435,6 +462,8 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <ul><li>Mondeling toetsen: wie een keuze niet zelf maakte, kan er mondeling niet dieper op ingaan.</li><li>Studenten op pad sturen voor research, bijvoorbeeld naar een museum.</li><li>Duidelijk afbakenen wat mag: niet elk AI-gebruik is een probleem.</li></ul></div>
         <div class="card stijn"><span class="tag">Stijn</span>
           <ul><li>De doelgroep superspecifiek maken: “breed publiek” nodigt uit tot het gemiddelde.</li><li>Verplicht persoonlijk of lokaal materiaal: zelf gefotografeerd, gefilmd, getekend of opgenomen.</li><li>Minder punten op het eindresultaat, meer op proces en procesverdediging.</li></ul></div>
+        <div class="card pieter"><span class="tag">Pieter</span>
+          <ul><li>Meer open vragen, bijvoorbeeld de doelgroep zelf laten bepalen.</li><li>Duidelijk maken dat we beoordelen op de kwaliteit van onderzoek, selectie, bijsturen en realisatie.</li><li>De student moet blijven aantonen te kunnen ontwerpen.</li></ul></div>
       </div>
 
       <div class="card feature rik">
@@ -448,10 +477,11 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <h3 style="font-size:clamp(24px,3.4vw,40px);margin-top:14px">Maak het beter dan de AI</h3>
         <p style="margin-top:14px" class="prose">De docent genereert zelf een AI-oplossing voor een briefing. Studenten benoemen wat er goed en slecht aan is, maken daarna een betere versie en tonen aan waarom die beter is. AI is volledig toegelaten, net als alle andere tools. De nadruk ligt op keuzes verantwoorden en ontwerp beoordelen.</p>
       </div>
+      <p class="note">Pieter verwijst bij deze vraag naar een artikel op <a href="https://dutchdesigndaily.com/stories/design-education-practice-and-archives-in-the-functionally-rational-reality/">Dutch Design Daily</a>.</p>
 
       <h3 class="sub">Strategieën</h3>
       <div class="tbl-wrap"><table id="strat"></table></div>
-      <p class="note">AI-gebruik vermelden doen alle vier al. Een mondelinge verdediging doet Hans al, Rik en Stijn willen ze proberen. Rik vinkte bij “verworpen opties verantwoorden” zowel “doe ik al” als “wil ik proberen” aan.</p>
+      <p class="note">AI-gebruik vermelden doen alle vijf al. Een mondelinge verdediging doet Hans al, Rik, Stijn en Pieter willen ze proberen. Rik vinkte bij “verworpen opties verantwoorden” zowel “doe ik al” als “wil ik proberen” aan. Pieter deed dat bij de mondelinge verdediging, maar noteert bij de evaluatie “nog niet”: daarom staat hier “wil proberen”. Bij een echte opdrachtgever vinkte Pieter zowel “wil ik proberen” als “niet zinvol in mijn vak” aan.</p>
 
       <h3 class="sub">Product tegenover proces in de evaluatie</h3>
       <div class="bars" id="bars"></div>
@@ -460,13 +490,14 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   </div></details>
 
   <details class="chap" id="identiteit">
-    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 4</span><span>Identiteit</span></div><h2 class="heavy">Identiteit, toekomst, opleiding</h2><p class="gist">Technische kennis en business sense onderscheiden ons. Over wat erbij moet en wat eraf mag, verschillen de meningen.</p><span class="tog" aria-hidden="true"></span></summary>
+    <summary class="sec-head tile t-white"><div class="corner meta"><span>Hoofdstuk 4</span><span>Identiteit</span></div><h2 class="heavy">Identiteit, toekomst, opleiding</h2><p class="gist">Technische kennis en business sense onderscheiden ons, maar misschien niet zichtbaar genoeg. Over wat erbij moet en wat eraf mag, verschillen de meningen.</p><span class="tog" aria-hidden="true"></span></summary>
     <div class="chap-body">
     <p class="q">Wie zijn we, wie heeft het werkveld nodig, en hoe brengen we studenten daar?</p>
     <div class="block">
       <h3 class="sub">Wat ons onderscheidt</h3>
       <p class="prose">Eva, Hans en Rik noemen <strong>technische kennis</strong> het grootste verschil met verwante opleidingen. Hans combineert ze met creativiteit, Eva met inzicht in het hele productieproces. Stijn legt de nadruk elders: onze studenten hebben een beter besef van de professionele realiteit, meer <strong>business sense</strong>, en weten dat hun ontwerpen een strategie moeten dienen. Rik vindt dat we in technische kennis moeten blijven investeren, ook als dat betekent dat we AI-tools beter leren beheersen. Tegelijk ziet Rik het probleem:</p>
       <blockquote class="rik"><p>AI kan pas zinvol ingezet worden als onze studenten een bredere kennis van het vakgebied hebben, en net daar knelt het. De learning curve vergt ‘kilometers op de teller’.</p><footer><span class="tag">Rik</span></footer></blockquote>
+      <p class="prose">Pieter vraagt zich af of we vandaag niet <strong>te weinig verschillen</strong>. In een gesprek is het verschil met een graduaatstudent snel duidelijk, maar naar buiten toe gebruiken we dezelfde woorden: oproepen voor afstudeerprojecten op LinkedIn zijn nagenoeg identiek. Het sterkste onderscheid zit volgens Pieter in de verbinding tussen ontwerpkwaliteit, technische diepgang en professionele realisatie. Van een bachelor verwachten we ook meer zelfstandigheid en verantwoordelijkheid.</p>
 
       <h3 class="sub">Wat een GDM'er kan en een AI-tool niet</h3>
       <div class="duo">
@@ -474,6 +505,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card hans"><span class="tag">Hans</span><p>Concepten bedenken (menselijkheid). Softwareproblemen die AI niet goed krijgt zelf oplossen.</p></div>
         <div class="card rik"><span class="tag">Rik</span><p>Met mensen werken: netwerken, je waarde verkopen, storytelling. “Mensen werken vooralsnog het liefst met mensen.”</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Een probleem vinden en kaderen. AI beantwoordt vragen; de student achterhaalt wat de echte vraag is. “Een opdrachtgever die ‘een filmpje’ vraagt, heeft misschien een ander probleem.”</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>“Zou moeten kunnen”: zelfstandig vraag en concept verbinden, onderzoeken wat nodig is, beoordelen welke combinatie van print, beeld, audiovisueel en interactie werkt, kwaliteit bewaken en professioneel opleveren. Denken in design systemen.</p></div>
       </div>
       <blockquote class="rik big"><p>AI heeft nooit met een BMX gereden, is nooit verliefd geweest en is nooit weggeblazen door een eerste keer Aphex Twin op volume 1000.</p><footer><span class="tag">Rik</span></footer></blockquote>
 
@@ -503,6 +535,12 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
             <li>Is technisch vloeiend zonder specialist te zijn: workflows bouwen, tools koppelen, een eenvoudig script maken.</li>
             <li>Is strateeg en gesprekspartner: meer tijd met klanten, minder achter het scherm.</li>
           </ul></div>
+        <div class="card pieter"><span class="tag">Pieter</span>
+          <ul>
+            <li>Ontwerpt niet louter met AI, maar ontwerpt wanneer AI het uitgangspunt wordt: conversationele en generatieve interfaces.</li>
+            <li>Weet hoe te werken wanneer de output niet vaststaat, maar probabilistisch is.</li>
+            <li>Ontwerpt en beoordeelt toepassingen waarvan de uitkomst per gebruiker of situatie kan verschillen.</li>
+          </ul></div>
       </div>
       <blockquote class="eva"><p>Als je alles wat je weet van je klant in AI ingeeft, dan mag dat resultaat zeker niet het resultaat van de ontwerper zijn. Dan kan de klant het zelf ook.</p><footer><span class="tag">Eva</span></footer></blockquote>
 
@@ -513,6 +551,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <tr class="hans"><td class="top"><span class="tag">Hans</span></td><td class="top">Puur technische jobs</td><td class="top">Lay-out, illustratie, motion, Photoshop, programmeren</td><td class="top">Cureren, AI-beelden bijschaven, kennis over technieken</td></tr>
           <tr class="rik"><td class="top"><span class="tag">Rik</span></td><td class="top">Kleine productieopdrachten zonder creativiteit: klanten doen die nu al zelf</td><td class="top">Processen gaan sneller; AI als sparringpartner voor presentaties, strategie en research</td><td class="top">Up-to-date blijven en experimenteren</td></tr>
           <tr class="stijn"><td class="top"><span class="tag">Stijn</span></td><td class="top">Repetitief productiewerk: formaatvarianten, resizes, campagnes uitrollen over kanalen</td><td class="top">Conceptontwikkeling: snel veel varianten verkennen en selecteren</td><td class="top">AI-workflows ontwerpen en beheren: pipelines, tools koppelen</td></tr>
+          <tr class="pieter"><td class="top"><span class="tag">Pieter</span></td><td class="top">Alles wat handmatig routinewerk is</td><td class="top">Ontwerpen, ontwikkelen, onderzoeken</td><td class="top">Kwaliteitsbewaking, user testing, workflows organiseren, controleren, bepalen waar AI meerwaarde heeft</td></tr>
         </tbody></table></div>
 
       <h3 class="sub">Signalen uit het werkveld</h3>
@@ -522,6 +561,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card rik"><span class="tag">Rik</span>
           <ul><li>Twee stagebedrijven die AI vooral audiovisueel inzetten: voor onze studenten is dat nog grotendeels een blinde vlek.</li></ul></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Kleinere stagebedrijven beginnen achterop te hinken en werken vaak nog erg traditioneel.</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>Zie onder meer de Mediabarometer 2026. Iedereen kijkt op dit moment naar elkaar.</p></div>
       </div>
 
       <h3 class="sub">Wat erbij moet</h3>
@@ -532,6 +572,8 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <ul><li>Soft skills en people skills</li><li>Een groter referentiekader (“dat kan je niet faken”)</li><li>Filosofisch denken en een meta-besef van het vak</li><li>Maar geen LUCA-studenten opleiden: ook technisch blijven bijsturen</li></ul></div>
         <div class="card stijn"><span class="tag">Stijn</span>
           <ul><li>Systemen ontwerpen in plaats van losse objecten: templates, merkregels en design systems waarmee AI verder kan.</li><li>Zelf vooraf de kwaliteitscriteria van een opdracht formuleren.</li></ul></div>
+        <div class="card pieter"><span class="tag">Pieter</span>
+          <ul><li>Media en disciplines verbinden: begrijpen hoe identiteit, video, interface en fysieke toepassingen samen één ervaring vormen.</li><li>Samenwerken met andere specialisten, misschien met ruimte in Expeditions.</li></ul></div>
       </div>
 
       <h3 class="sub">Wat eraf mag</h3>
@@ -540,6 +582,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card rik"><span class="tag">Rik</span><p>Klassieke skills die AI overbodig maakt durven schrappen, mits duiding: weten welke skill AI vervangt blijft nodig. “Hoeveel Photoshop gaan we binnen 5 jaar nog nodig hebben?”</p></div>
         <div class="card eva"><span class="tag">Eva</span><p>Schrap niet te veel van wat voor ons evident lijkt. Een eerstejaars heeft geen grafische, esthetische of softwarekennis.</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Softwaretraining als doel op zich herevalueren. Minder menu's overlopen en studenten uitdagen om zelf oplossingen te vinden. Wel veel aandacht voor de ambachtelijke onderbouw waar software uiteindelijk een oplossing voor biedt.</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>Wat niet bijdraagt aan inzicht, vakmanschap of zelfstandigheid.</p></div>
       </div>
 
       <h3 class="sub">Wat hun vak het sterkst traint</h3>
@@ -548,6 +591,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card hans"><span class="tag">Hans</span><p>GD3: research. GD4: eindproduct. Art Direction: concept en esthetiek.</p></div>
         <div class="card rik"><span class="tag">Rik</span><p>Nieuwsgierigheid, referenties, introspectie, analoge skills en fouten durven maken. Daar zit creativiteit die AI nooit vindt.</p></div>
         <div class="card stijn"><span class="tag">Stijn</span><p>Denken in tijd en aandacht: de aandacht van een kijker seconde per seconde sturen. Ritme, timing en hiërarchie in de tijd, een dramaturgisch denken dat AI-tools niet beheersen.</p></div>
+        <div class="card pieter"><span class="tag">Pieter</span><p>Vakmanschap en inzicht. In mindere mate zelfstandigheid, omdat het om eerstejaarsvakken gaat.</p></div>
       </div>
     </div>
   </div></details>
@@ -560,25 +604,28 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
       <div class="duo">
         <div class="card"><span class="meta">Generalist of specialist?</span>
           <p class="big-words" style="font-size:clamp(34px,5vw,60px)">T-profiel</p>
-          <p style="font-weight:700;margin-top:6px">4 van 4 respondenten</p>
-          <p style="margin-top:8px">Rik leende het van een voetbalscout: een voldoende op alles en een excellent op één facet van het spel.</p></div>
+          <p style="font-weight:700;margin-top:6px">5 van 5 respondenten</p>
+          <p style="margin-top:8px">Rik leende het van een voetbalscout: een voldoende op alles en een excellent op één facet van het spel.</p>
+          <p style="margin-top:8px">Pieter: diepte in een vakgebied, en een gedeelde breedte in onderzoek, conceptueel denken, kritisch oordelen en begrijpen hoe ontwerpkeuzes doorwerken in verschillende media.</p></div>
         <div class="card"><span class="meta">Jobtitels</span>
           <ul>
             <li><span class="tag hans">Hans</span> Art director, brand designer, crossmedia designer</li>
             <li><span class="tag rik">Rik</span> Liever een profiel dan titels. Als dat de art director van de toekomst is, doen we het goed.</li>
             <li><span class="tag stijn">Stijn</span> Motion designer, visual designer, creative lead, creative technologist</li>
+            <li><span class="tag pieter">Pieter</span> Graphic, visual, brand en digital designer; audiovisual en motion designer, videomaker; UX/UI designer, creative developer, front-end developer; prepress- en printspecialist; multimedia designer, creative technologist</li>
           </ul></div>
       </div>
 
       <h3 class="sub">Belangrijkste competenties</h3>
       <div class="tbl-wrap"><table id="rank"></table></div>
-      <p class="note">Gesorteerd op gemiddelde plaats. Het verst uiteen lopen kritisch oordeel over AI-output (Stijn 3, Hans 5, Rik 7) en crossmediaal denken (Hans 4, Stijn 5, Rik 8). Rik gaf twee keer een tussenrang (1.1 en 3.1); die zijn hier omgezet naar plaats 2 en 5. Ontbreekt volgens Hans: visuele geletterdheid, esthetisch inzicht en creatief vakmanschap. Eva rangschikte niet: in schijf 1 komt techniek eerst, in schijf 3 onderzoek en experiment.</p>
+      <p class="note">Gesorteerd op gemiddelde plaats. Het verst uiteen lopen kritisch oordeel over AI-output (Pieter 2, Stijn 3, Hans 5, Rik 7) en crossmediaal denken (Hans 4, Stijn 5, Pieter 6, Rik 8). Rik gaf twee keer een tussenrang (1.1 en 3.1); die zijn hier omgezet naar plaats 2 en 5. Ontbreekt volgens Hans: visuele geletterdheid, esthetisch inzicht en creatief vakmanschap. Eva rangschikte niet: in schijf 1 komt techniek eerst, in schijf 3 onderzoek en experiment.</p>
 
       <h3 class="sub">De ideale afgestudeerde</h3>
       <div class="duo">
         <blockquote class="hans"><p>Een creatieve en kritische ontwerper met een sterke visuele, culturele en technische basis, die bewust analoge, digitale en AI-gestuurde technieken combineert.</p><footer><span class="tag">Hans</span></footer></blockquote>
         <blockquote class="rik"><p>Een creatieve problem-solver die empathie combineert met communicatie, durft te experimenteren en weet dat het creatief proces, hoewel traag, een meerwaarde is als je fouten omarmt.</p><footer><span class="tag">Rik</span></footer></blockquote>
         <blockquote class="stijn"><p>Een ontwerper die een vraag kan kaderen voor hij ze beantwoordt, en die met een eigen standpunt en een getraind oordeel kiest wat werkt voor een concreet publiek in een concrete context.</p><footer><span class="tag">Stijn</span></footer></blockquote>
+        <blockquote class="pieter"><p>Onderzoekt een mediavraagstuk, formuleert een heldere richting en onderbouwt keuzes vanuit inhoud, doelgroep en context. Vanuit een eigen specialisatie vertaalt die inzichten naar een professionele realisatie, met vakmanschap en een doordachte inzet van technologie en AI.</p><footer><span class="tag">Pieter</span></footer></blockquote>
       </div>
     </div>
   </div></details>
@@ -590,11 +637,11 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     <div class="block">
       <h3 class="sub">De opleiding in één zin</h3>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Voor</th><th><span class="tag rik">Rik</span></th><th><span class="tag stijn">Stijn</span></th></tr></thead>
+        <thead><tr><th>Voor</th><th><span class="tag rik">Rik</span></th><th><span class="tag stijn">Stijn</span></th><th><span class="tag pieter">Pieter</span></th></tr></thead>
         <tbody>
-          <tr><td class="top"><strong>Scholier</strong></td><td>Hier leer je de wereld bekijken door een bril die geen computersysteem kan nadoen, en mensen raken met wat jij toevoegt.</td><td>Je leert ideeën omzetten in beelden, video’s, websites en drukwerk die mensen echt raken, en je leert zelf beslissen wat goed is, ook als AI de helft kan maken.</td></tr>
-          <tr><td class="top"><strong>Ouders</strong></td><td>In drie jaar bereiden we studenten voor op een wereld die steeds verandert, met de houding om waardevol te blijven.</td><td>Een praktijkgerichte bachelor die uw kleine opleidt tot ontwerper die creatief én technisch sterk is, en die leert werken met AI in plaats van erdoor vervangen te worden.</td></tr>
-          <tr><td class="top"><strong>Werkgever</strong></td><td>Onze studenten passen snel in bestaande productieprocessen, zijn nieuwsgierig genoeg om mee te evolueren en stellen de juiste vragen.</td><td>We leiden ontwerpers op die een briefing kunnen bevragen, met onderbouwd oordeel kiezen en regisseren, en vlot schakelen tussen print, scherm en beweging.</td></tr>
+          <tr><td class="top"><strong>Scholier</strong></td><td>Hier leer je de wereld bekijken door een bril die geen computersysteem kan nadoen, en mensen raken met wat jij toevoegt.</td><td>Je leert ideeën omzetten in beelden, video’s, websites en drukwerk die mensen echt raken, en je leert zelf beslissen wat goed is, ook als AI de helft kan maken.</td><td>Je kiest waarin je sterk wilt worden: visueel ontwerp, video, interactieve media of print, en je leert met andere makers samenwerken om een idee tot leven te brengen.</td></tr>
+          <tr><td class="top"><strong>Ouders</strong></td><td>In drie jaar bereiden we studenten voor op een wereld die steeds verandert, met de houding om waardevol te blijven.</td><td>Een praktijkgerichte bachelor die uw kleine opleidt tot ontwerper die creatief én technisch sterk is, en die leert werken met AI in plaats van erdoor vervangen te worden.</td><td>Uw kind ontwikkelt expertise in visueel ontwerp, video, interactieve media of print en leert die inzetten om zelfstandig én met andere specialisten professionele projecten te realiseren.</td></tr>
+          <tr><td class="top"><strong>Werkgever</strong></td><td>Onze studenten passen snel in bestaande productieprocessen, zijn nieuwsgierig genoeg om mee te evolueren en stellen de juiste vragen.</td><td>We leiden ontwerpers op die een briefing kunnen bevragen, met onderbouwd oordeel kiezen en regisseren, en vlot schakelen tussen print, scherm en beweging.</td><td>U krijgt een starter die sterk is in visueel ontwerp, video, interactieve media of print, zelfstandig een afgebakende opdracht kan realiseren en vlot samenwerkt met andere specialisten.</td></tr>
         </tbody></table></div>
       <blockquote class="hans"><p>Wij leiden ontwerpers op die verder kijken dan de uitvoering. Ze combineren creatief vakmanschap met technologie en AI, zonder ervan afhankelijk te zijn.</p><footer><span class="tag">Hans · voor alle drie de doelgroepen</span></footer></blockquote>
 
@@ -602,14 +649,16 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
         <div class="card"><span class="meta">Het beeld van GDM vandaag</span>
           <ul><li><span class="tag hans">Hans</span> Sterk in techniek en software, breed inzetbaar en communicatief. Maar ook: niet erg kunstzinnig, slechte tekenaars, weinig eigenheid.</li>
           <li><span class="tag rik">Rik</span> “Technische profielen.” Deels waar, maar geen collega wil zich daartoe beperken.</li>
-          <li><span class="tag stijn">Stijn</span> We hangen nog wat vast aan onze geschiedenis van ‘drukkerijschool’ en worden gezien als de minst creatieve van de lokale grafische opleidingen.</li></ul></div>
+          <li><span class="tag stijn">Stijn</span> We hangen nog wat vast aan onze geschiedenis van ‘drukkerijschool’ en worden gezien als de minst creatieve van de lokale grafische opleidingen.</li>
+          <li><span class="tag pieter">Pieter</span> De sector zou te hard geïmpacteerd worden door AI. En omdat posters of huisstijlen makkelijk voorstelbaar zijn, verdwijnt het denkwerk erachter snel uit beeld.</li></ul></div>
         <div class="card"><span class="meta">AI zonder hype</span>
           <ul><li><span class="tag hans">Hans</span> Uitleggen waar en hoe we AI inzetten, en het belang van alles daarnaast benadrukken.</li>
           <li><span class="tag rik">Rik</span> Benoemen welke plek AI echt inneemt op de werkvloer: stap voor stap, als tool. Wie AI vandaag verrassend inzet, kon dat gisteren ook zonder.</li>
-          <li><span class="tag stijn">Stijn</span> Niet ontkennen dat AI de sector op zijn kop zet. Tonen hoe studenten AI gebruiken en waar ze zelf beslissen, met de nadruk op wat de ontwerper blijft doen.</li></ul></div>
+          <li><span class="tag stijn">Stijn</span> Niet ontkennen dat AI de sector op zijn kop zet. Tonen hoe studenten AI gebruiken en waar ze zelf beslissen, met de nadruk op wat de ontwerper blijft doen.</li>
+          <li><span class="tag pieter">Pieter</span> Craft, technology en taste boven tools. Je ontdekt waar AI je kan helpen, en je leert beoordelen wat werkt, keuzes maken en je ontwerp zelf verder uitwerken.</li></ul></div>
       </div>
       <blockquote class="rik big"><p>Eens de surprise van AI wegebt, komt de mens terug boven.</p><footer><span class="tag">Rik</span></footer></blockquote>
-      <p class="note">Bewijsstukken: studentenwerk en cases uit het werkveld (Hans), bachelorproeven die empathie in zich dragen (Rik), projecten die proces en oordeel tonen, zoals een campagne met de verworpen varianten erbij (Stijn). Kanalen: Instagram en TikTok (Hans), socials en maatschappelijke projecten waar we luid over praten (Rik), Instagram en TikTok met kort studentenwerk en making-ofs, workshops op secundaire scholen en studentenambassadeurs (Stijn). Eva stelt voor om beeldvorming en kanalen aan de doelgroep zelf te vragen.</p>
+      <p class="note">Bewijsstukken: studentenwerk en cases uit het werkveld (Hans), bachelorproeven die empathie in zich dragen (Rik), projecten die proces en oordeel tonen, zoals een campagne met de verworpen varianten erbij (Stijn), een door docenten gecureerde selectie afstudeerprojecten, een soort ‘Certain regard’ zoals op het filmfestival van Cannes (Pieter). Kanalen: Instagram en TikTok (Hans), socials en maatschappelijke projecten waar we luid over praten (Rik), Instagram en TikTok met kort studentenwerk en making-ofs, workshops op secundaire scholen en studentenambassadeurs (Stijn), social media, infodagen, de opleidingspagina en misschien een designwedstrijd voor de derde graad secundair (Pieter). Eva stelt voor om beeldvorming en kanalen aan de doelgroep zelf te vragen.</p>
     </div>
   </div></details>
 
@@ -623,6 +672,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <div class="hans"><span class="tag">Hans</span><p>AI in schijf 2 doet de manuele technieken uit schijf 1 vergeten. Vraag om een duidelijke leerlijn.</p></div>
           <div class="rik"><span class="tag">Rik</span><p>Jaar per jaar in kaart brengen: wat kan, wanneer, en hoe beoordelen we competenties.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>Meer punten op proces en procesverdediging. Studenten bepalen zelf vooraf de kwaliteitscriteria.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>Niet louter op output beoordelen, ook niet in hogere jaren. In GD1 en GD2 wegen de stappen zwaarder dan het resultaat.</p></div>
         </div></div>
       <div class="theme"><h3>Verbieden of alles toelaten?</h3>
         <div class="cols">
@@ -630,6 +680,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <div class="hans"><span class="tag">Hans</span><p>Per opdracht afspreken welke onderdelen wel en niet met AI mogen.</p></div>
           <div class="rik"><span class="tag">Rik</span><p>Duidelijk afbakenen wat mag: niet elk AI-gebruik is een probleem.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>In geselecteerde opdrachten AI 100% toelaten, en sturen op verantwoording van keuzes.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>AI mag, maar niet overal: als typografie het leerdoel is, moet de student zelf leren kiezen.</p></div>
         </div></div>
       <div class="theme"><h3>Schrappen of toevoegen?</h3>
         <div class="cols">
@@ -637,6 +688,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <div class="hans"><span class="tag">Hans</span><p>Manuele technieken en kunstgeschiedenis erbij; groepswerken minder.</p></div>
           <div class="rik"><span class="tag">Rik</span><p>Skills die AI overbodig maakt durven schrappen, mits duiding. Liefst kort op de bal spelen.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>Softwaretraining herevalueren: minder menu's, meer zelf oplossingen zoeken, op een sterke ambachtelijke onderbouw. Systemen ontwerpen en eigen kwaliteitscriteria erbij.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>Schrappen wat niet bijdraagt aan inzicht, vakmanschap of zelfstandigheid. Media verbinden en samenwerken met specialisten erbij.</p></div>
         </div></div>
       <div class="theme"><h3>Wat is de kern van het vak?</h3>
         <div class="cols">
@@ -644,18 +696,21 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
           <div class="hans"><span class="tag">Hans</span><p>Concept, cureren, esthetiek en manuele kunde.</p></div>
           <div class="rik"><span class="tag">Rik</span><p>Probleemoplossend denken, empathie, storytelling en people skills.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>Een probleem kaderen, selecteren en regisseren, en verantwoorden waarom.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>Vraag en concept verbinden, kwaliteit bewaken, professioneel opleveren en denken in design systemen.</p></div>
         </div></div>
       <div class="theme"><h3>Mondeling toetsen als antwoord op AI?</h3>
         <div class="cols">
           <div class="hans"><span class="tag">Hans</span><p>Doet al mondelinge verdedigingen; in Expedition telt die voor 30 %.</p></div>
           <div class="rik"><span class="tag">Rik</span><p>Wil meer mondeling: wie een keuze niet zelf maakte, kan er niet dieper op ingaan.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>Toetst vandaag niet mondeling, maar wil de verdediging proberen.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>Nog niet: het idee is geopperd bij het verbeteren van examenopdrachten GD2, maar nog niet concreet.</p></div>
         </div></div>
       <div class="theme"><h3>Welke naam?</h3>
         <div class="cols">
           <div class="rik"><span class="tag">Rik</span><p>Visual Design of Visual Communication Design, liefst Engels.</p></div>
           <div class="hans"><span class="tag">Hans</span><p>Geen AI, communicatie of technology in de naam.</p></div>
           <div class="stijn"><span class="tag">Stijn</span><p>Creative Media of Media Design &amp; Technology, in het Engels. Media als gemene deler, geen “grafisch”.</p></div>
+          <div class="pieter"><span class="tag">Pieter</span><p>Geen eigen voorstel: de naam moet uit het curriculum komen. Wel Media Design &amp; Technology als richting, geen “grafisch”.</p></div>
         </div></div>
     </div>
   </div></details>
@@ -677,27 +732,27 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
 <script id="data" type="application/json">
 {
   "total": 19,
-  "people": ["eva", "hans", "rik", "stijn"],
-  "names": { "eva": "Eva", "hans": "Hans", "rik": "Rik", "stijn": "Stijn" },
-  "aiLevel": { "eva": 1, "hans": 2, "rik": 1, "stijn": 2 },
+  "people": ["eva", "hans", "rik", "stijn", "pieter"],
+  "names": { "eva": "Eva", "hans": "Hans", "rik": "Rik", "stijn": "Stijn", "pieter": "Pieter" },
+  "aiLevel": { "eva": 1, "hans": 2, "rik": 1, "stijn": 2, "pieter": 1 },
   "aiLevels": ["Niet", "Af en toe, ad hoc", "In enkele opdrachten", "Structureel, in de meeste opdrachten"],
   "ways": [
-    ["Toont of leert AI-tools in de les", 1, 1, 0, 1],
-    ["Studenten mogen AI gebruiken in opdrachten", 0, 1, 1, 1],
-    ["AI is een verplicht onderdeel van opdrachten", 0, 1, 0, 0],
-    ["AI is in bepaalde opdrachten niet toegelaten", 1, 1, 1, 0],
-    ["Bespreekt AI kritisch (ethiek, auteurschap, impact)", 0, 1, 1, 1],
-    ["Gebruikt AI zelf voor lesvoorbereiding of feedback", 0, 1, 1, 1]
+    ["Toont of leert AI-tools in de les", 1, 1, 0, 1, 1],
+    ["Studenten mogen AI gebruiken in opdrachten", 0, 1, 1, 1, 1],
+    ["AI is een verplicht onderdeel van opdrachten", 0, 1, 0, 0, 0],
+    ["AI is in bepaalde opdrachten niet toegelaten", 1, 1, 1, 0, 1],
+    ["Bespreekt AI kritisch (ethiek, auteurschap, impact)", 0, 1, 1, 1, 1],
+    ["Gebruikt AI zelf voor lesvoorbereiding of feedback", 0, 1, 1, 1, 1]
   ],
   "strategies": [
-    ["Een echte opdrachtgever, publiek of context", "", "al", "wil", "al"],
-    ["Een standpunt vragen in plaats van een deliverable", "", "niet", "wil", "wil"],
-    ["Verworpen opties laten verantwoorden", "", "wil", "al", "al"],
-    ["Een onverwachte wending tijdens de opdracht", "", "al", "wil", "wil"],
-    ["Het proces beoordelen, niet enkel het eindresultaat", "", "al", "al", "al"],
-    ["Een verplichte mondelinge verdediging", "", "al", "wil", "wil"],
-    ["AI-gebruik vermelden zoals een bronvermelding", "al", "al", "al", "al"],
-    ["Co-creatie of peer feedback", "", "al", "wil", "wil"]
+    ["Een echte opdrachtgever, publiek of context", "", "al", "wil", "al", "wil"],
+    ["Een standpunt vragen in plaats van een deliverable", "", "niet", "wil", "wil", "wil"],
+    ["Verworpen opties laten verantwoorden", "", "wil", "al", "al", "al"],
+    ["Een onverwachte wending tijdens de opdracht", "", "al", "wil", "wil", "wil"],
+    ["Het proces beoordelen, niet enkel het eindresultaat", "", "al", "al", "al", "al"],
+    ["Een verplichte mondelinge verdediging", "", "al", "wil", "wil", "wil"],
+    ["AI-gebruik vermelden zoals een bronvermelding", "al", "al", "al", "al", "al"],
+    ["Co-creatie of peer feedback", "", "al", "wil", "wil", "al"]
   ],
   "evaluation": [
     { "who": "hans", "vak": "GD3", "product": 50, "proces": 40, "mondeling": 0, "remark": "Veranderen? Misschien." },
@@ -705,28 +760,29 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     { "who": "hans", "vak": "Expedition", "product": 30, "proces": 30, "mondeling": 30, "remark": "" },
     { "who": "hans", "vak": "Art Direction", "product": 100, "proces": 0, "mondeling": 0, "remark": "Eindproduct en mondelinge verdediging samen als één totaalpunt. Veranderen? Nee.", "joint": true },
     { "who": "rik", "vak": "Eigen vakken", "product": 30, "proces": 50, "mondeling": 0, "remark": "Veranderen? Ja, meer mondeling." },
-    { "who": "stijn", "vak": "Eigen vakken", "product": 70, "proces": 30, "mondeling": 0, "remark": "Veranderen? Ja." }
+    { "who": "stijn", "vak": "Eigen vakken", "product": 70, "proces": 30, "mondeling": 0, "remark": "Veranderen? Ja." },
+    { "who": "pieter", "vak": "Eigen vakken", "product": 40, "proces": 60, "mondeling": 0, "remark": "Mondelinge verdediging: nog niet. Wel geopperd bij het verbeteren van examenopdrachten GD2, nog niet concreet." }
   ],
   "competences": [
-    ["Conceptueel denken en betekenis geven", { "hans": 1, "rik": 1, "stijn": 1 }],
-    ["Onderzoek, experiment en zelfstandig bijleren", { "hans": 2, "rik": 2, "stijn": 2 }],
-    ["Samenwerking en communicatie met opdrachtgevers en teams", { "hans": 3, "rik": 3, "stijn": 4 }],
-    ["Technische uitvoering en softwarebeheersing", { "hans": 6, "rik": 4, "stijn": 6 }],
-    ["Kritisch oordeel over (AI-)output", { "hans": 5, "rik": 7, "stijn": 3 }],
-    ["Crossmediaal denken over print, digitaal en beweging", { "hans": 4, "rik": 8, "stijn": 5 }],
-    ["Productiekennis en workflows", { "hans": 7, "rik": 6, "stijn": 7 }],
-    ["Ethisch bewustzijn en maatschappelijke verantwoordelijkheid", { "hans": 8, "rik": 5, "stijn": 8 }]
+    ["Conceptueel denken en betekenis geven", { "hans": 1, "rik": 1, "stijn": 1, "pieter": 1 }],
+    ["Onderzoek, experiment en zelfstandig bijleren", { "hans": 2, "rik": 2, "stijn": 2, "pieter": 3 }],
+    ["Samenwerking en communicatie met opdrachtgevers en teams", { "hans": 3, "rik": 3, "stijn": 4, "pieter": 5 }],
+    ["Technische uitvoering en softwarebeheersing", { "hans": 6, "rik": 4, "stijn": 6, "pieter": 4 }],
+    ["Kritisch oordeel over (AI-)output", { "hans": 5, "rik": 7, "stijn": 3, "pieter": 2 }],
+    ["Crossmediaal denken over print, digitaal en beweging", { "hans": 4, "rik": 8, "stijn": 5, "pieter": 6 }],
+    ["Productiekennis en workflows", { "hans": 7, "rik": 6, "stijn": 7, "pieter": 7 }],
+    ["Ethisch bewustzijn en maatschappelijke verantwoordelijkheid", { "hans": 8, "rik": 5, "stijn": 8, "pieter": 8 }]
   ],
   "coverage": [
-    ["1.1 Dekt de naam de lading?", 0, 1, 1, 1], ["1.2 Naamvoorstellen", 0, 0, 1, 1], ["1.3 Woorden wel / niet", 0, 1, 1, 1], ["1.4 Nederlands of Engels", 0, 0, 1, 1],
-    ["2.1 Hoeveel AI", 1, 1, 1, 1], ["2.2 Op welke manier", 1, 1, 1, 1], ["2.3 Tools", 1, 1, 1, 1], ["2.4 Goede praktijken", 1, 1, 1, 1],
-    ["2.5 Slechte praktijken", 1, 1, 1, 1], ["2.6 Verantwoording AI-gebruik", 1, 0, 1, 1], ["2.7 Wat nodig is", 1, 1, 1, 1],
-    ["3.1 Kwetsbare opdracht", 1, 1, 1, 1], ["3.2 Opdracht herschrijven", 0, 1, 1, 1], ["3.3 Strategieën", 1, 1, 1, 1], ["3.4 Product / proces", 1, 1, 1, 1], ["3.5 Voorbeeldbriefing", 0, 0, 1, 1],
-    ["4.1 Verschil met verwante opleidingen", 1, 1, 1, 1], ["4.2 Wat AI niet kan", 1, 1, 1, 1], ["4.3 Ontwerper over 5 jaar", 1, 1, 1, 1], ["4.4 Taken die veranderen", 0, 1, 1, 1],
-    ["4.5 Signalen werkveld", 0, 1, 1, 1], ["4.6 Wat ontbreekt", 0, 1, 1, 1], ["4.7 Wat mag minder", 1, 1, 1, 1], ["4.8 Houding die je vak traint", 1, 1, 1, 1],
-    ["5.1 Jobtitels", 0, 1, 1, 1], ["5.2 Ideale afgestudeerde", 1, 1, 1, 1], ["5.3 Competenties rangschikken", 0, 1, 1, 1], ["5.4 Generalist of specialist", 1, 1, 1, 1],
-    ["6.1 Opleiding in één zin", 0, 1, 1, 1], ["6.2 Beeld van GDM", 0, 1, 1, 1], ["6.3 AI zonder hype", 0, 1, 1, 1], ["6.4 Bewijsstukken", 0, 1, 1, 1], ["6.5 Kanalen", 0, 1, 1, 1],
-    ["7.1 Op tafel in het gesprek", 1, 1, 1, 0]
+    ["1.1 Dekt de naam de lading?", 0, 1, 1, 1, 1], ["1.2 Naamvoorstellen", 0, 0, 1, 1, 1], ["1.3 Woorden wel / niet", 0, 1, 1, 1, 1], ["1.4 Nederlands of Engels", 0, 0, 1, 1, 1],
+    ["2.1 Hoeveel AI", 1, 1, 1, 1, 1], ["2.2 Op welke manier", 1, 1, 1, 1, 1], ["2.3 Tools", 1, 1, 1, 1, 1], ["2.4 Goede praktijken", 1, 1, 1, 1, 1],
+    ["2.5 Slechte praktijken", 1, 1, 1, 1, 1], ["2.6 Verantwoording AI-gebruik", 1, 0, 1, 1, 1], ["2.7 Wat nodig is", 1, 1, 1, 1, 1],
+    ["3.1 Kwetsbare opdracht", 1, 1, 1, 1, 1], ["3.2 Opdracht herschrijven", 0, 1, 1, 1, 1], ["3.3 Strategieën", 1, 1, 1, 1, 1], ["3.4 Product / proces", 1, 1, 1, 1, 1], ["3.5 Voorbeeldbriefing", 0, 0, 1, 1, 1],
+    ["4.1 Verschil met verwante opleidingen", 1, 1, 1, 1, 1], ["4.2 Wat AI niet kan", 1, 1, 1, 1, 1], ["4.3 Ontwerper over 5 jaar", 1, 1, 1, 1, 1], ["4.4 Taken die veranderen", 0, 1, 1, 1, 1],
+    ["4.5 Signalen werkveld", 0, 1, 1, 1, 1], ["4.6 Wat ontbreekt", 0, 1, 1, 1, 1], ["4.7 Wat mag minder", 1, 1, 1, 1, 1], ["4.8 Houding die je vak traint", 1, 1, 1, 1, 1],
+    ["5.1 Jobtitels", 0, 1, 1, 1, 1], ["5.2 Ideale afgestudeerde", 1, 1, 1, 1, 1], ["5.3 Competenties rangschikken", 0, 1, 1, 1, 1], ["5.4 Generalist of specialist", 1, 1, 1, 1, 1],
+    ["6.1 Opleiding in één zin", 0, 1, 1, 1, 1], ["6.2 Beeld van GDM", 0, 1, 1, 1, 1], ["6.3 AI zonder hype", 0, 1, 1, 1, 1], ["6.4 Bewijsstukken", 0, 1, 1, 1, 1], ["6.5 Kanalen", 0, 1, 1, 1, 1],
+    ["7.1 Op tafel in het gesprek", 1, 1, 1, 0, 0]
   ]
 }
 </script>
