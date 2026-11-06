@@ -51,7 +51,7 @@ p { margin: 0; }
 
 /* Tegels: elke tegel zet zijn eigen tekstkleuren */
 .tile { position: relative; padding: 18px 20px; min-width: 0; background: var(--bg, var(--white)); color: var(--ink); }
-.tile, .card, .tbl-wrap, .bars, .scale, .person, .theme, .cov, .keys li, .strats {
+.tile, .card, .tbl-wrap, .bars, .person, .theme, .cov, .keys li, .strats {
   --ink: #000000; --muted: #4a4a4a; --rule: #cfcfcf; --sheet: #ffffff;
 }
 .tile.dark { --bg: var(--coal); --ink: #fff; --muted: #a8a8a8; --rule: #3a3a3a; }
@@ -169,15 +169,18 @@ blockquote.big p { font-family: var(--font-display); font-weight: 900; font-stre
 .person h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 18px; line-height: .95; }
 .person p { margin-top: 10px; font-size: 15px; }
 
-/* Schaal 2.1 */
-.scale { background: var(--white); color: #000; padding: 24px 20px 18px; }
-.scale-track { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
-.scale-track::before { content: ""; position: absolute; left: 12.5%; right: 12.5%; top: 11px; height: 3px; background: #000; }
-.step { display: grid; justify-items: center; align-content: start; gap: 8px; text-align: center; position: relative; }
-.step .dot { width: 24px; height: 24px; background: var(--white); border: 3px solid #000; }
-.step .who { display: flex; flex-direction: column; gap: 4px; align-items: center; min-height: 40px; }
-.step span.t { font-size: 14px; font-weight: 600; line-height: 1.25; }
-.step.hit .dot { background: #000; }
+/* Hoeveelheid AI 2.1 */
+.lvls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 20px; }
+.lvl { display: grid; gap: 4px; align-content: start; }
+.lvl b { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(30px, 4.4vw, 48px); line-height: .9; font-variant-numeric: tabular-nums; }
+.lvl .t { display: flex; gap: 6px; font-size: 14px; font-weight: 600; line-height: 1.25; }
+.lvl .t i { flex: none; width: 12px; height: 12px; margin-top: 3px; }
+.lvl.none b, .lvl.none .t { color: #8a8a8a; }
+.lvl .who { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.lvl .who:empty { display: none; }
+.lvl-bar { display: flex; height: 22px; }
+.l0 { background: var(--grey); } .l1 { background: #9a9a9a; } .l2 { background: #4a4a4a; } .l3 { background: #000; }
+@media (max-width: 620px) { .lvls { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Tabellen */
 .tbl-wrap { overflow-x: auto; background: var(--white); color: #000; }
@@ -187,8 +190,6 @@ tr:last-child td { border-bottom: 0; }
 thead th { background: var(--grey); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
 td.c, th.c { text-align: center; width: 110px; }
 td.top { vertical-align: top; }
-.mark { display: inline-block; width: 16px; height: 16px; border: 2px solid #000; }
-.mark.on { background: #000; }
 .chip { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 6px 1px; white-space: nowrap; }
 .chip.al { background: #000; color: #fff; }
 .chip.wil { box-shadow: inset 0 0 0 1px #000; color: #000; }
@@ -213,6 +214,7 @@ tr.top3 { background: #f1f1f1; }
 .strats.picked .srow > summary { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 96px 22px; }
 .sme { display: none; }
 .strats.picked .sme { display: block; }
+.sbar.track { background: var(--grey); }
 .sbar { display: flex; height: 24px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .sbar i { font-style: normal; display: flex; align-items: center; padding-left: 7px; overflow: hidden; white-space: nowrap; }
 .seg-al { background: #000; color: #fff; }
@@ -418,10 +420,12 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     <p class="q">Hoe komt AI vandaag aan bod, en wat werkt?</p>
     <div class="block">
       <h3 class="sub">Hoeveel AI zit er in het vak?</h3>
-      <div class="scale"><div class="scale-track" id="scale"></div></div>
+      <p class="note">Klik op een naam om te zien waar die collega staat.</p>
+      <div class="strats" id="scale"></div>
 
       <h3 class="sub">Op welke manier?</h3>
-      <div class="tbl-wrap"><table id="ways"></table></div>
+      <p class="note">Gesorteerd op wat het vaakst voorkomt. Klik op een manier om te zien wie dit doet, of op een naam om de antwoorden van die collega te zien.</p>
+      <div class="strats" id="ways"></div>
       <p class="note">Hans gebruikt AI op alle manieren. Eva en Rik verbieden het in bepaalde opdrachten en gebruiken het minder breed. Pieter doet alles behalve AI verplichten, en verbiedt het ook in bepaalde opdrachten. Stijn vinkte geen verbod aan en maakt AI nergens verplicht, maar laat het alleen in geselecteerde opdrachten 100% toe. Wim en Marieke maken AI in sommige opdrachten verplicht en laten het in andere niet toe. Olivier laat het in bepaalde opdrachten niet toe. Hans, Rik, Stijn, Pieter, Wim en Marieke gebruiken AI zelf om hun lessen voor te bereiden.</p>
 
       <h3 class="sub">Welke AI-tools en waarvoor?</h3>
@@ -968,24 +972,73 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   var prog = document.getElementById('progress');
   for (var i = 0; i < D.total; i++) prog.appendChild(el('i', i < P.length ? 'on' : ''));
 
-  // 2.1 schaal
-  var scale = document.getElementById('scale');
-  D.aiLevels.forEach(function (label, i) {
-    var who = P.filter(function (p) { return D.aiLevel[p] === i; });
-    var s = el('div', 'step' + (who.length ? ' hit' : ''));
-    s.appendChild(el('span', 'dot'));
-    s.appendChild(el('span', 't', label));
-    s.appendChild(el('div', 'who', who.map(tag).join('')));
-    scale.appendChild(s);
-  });
+  // Knoppen per collega: klik toont details, nog eens klikken verbergt ze
+  function whoButtons(people, label, onPick) {
+    var box = el('div', 'who-btns');
+    box.setAttribute('role', 'group');
+    box.setAttribute('aria-label', label);
+    people.forEach(function (p) {
+      var b = el('button', '', p === 'alle' ? 'Iedereen' : D.names[p]);
+      b.type = 'button'; b.dataset.p = p; b.setAttribute('aria-pressed', 'false');
+      box.appendChild(b);
+    });
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var on = b.getAttribute('aria-pressed') !== 'true';
+      box.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', String(on));
+      onPick(on ? b.dataset.p : null);
+    });
+    return box;
+  }
+  function pct(n, total) { return Math.round(n / total * 100); }
 
-  // 2.2 manieren
-  function head(first) { return '<thead><tr><th>' + first + '</th>' + P.map(function (p) { return '<th class="c">' + tag(p) + '</th>'; }).join('') + '</tr></thead>'; }
-  document.getElementById('ways').innerHTML = head('Manier') + '<tbody>' + D.ways.map(function (r) {
-    return '<tr><td>' + r[0] + '</td>' + P.map(function (p, j) {
-      return '<td class="c ' + p + '"><span class="mark' + (r[j + 1] ? ' on' : '') + '" aria-label="' + (r[j + 1] ? 'ja' : 'nee') + '"></span></td>';
-    }).join('') + '</tr>';
-  }).join('') + '</tbody>';
+  // 2.1 hoeveelheid AI: verdeling, namen na een klik
+  var scale = document.getElementById('scale');
+  var lvls = el('div', 'lvls'), lvlBar = el('div', 'lvl-bar'), lvlWho = [];
+  D.aiLevels.forEach(function (label, i) {
+    var who = P.filter(function (p) { return D.aiLevel[p] === i; }), v = pct(who.length, P.length);
+    var c = el('div', 'lvl' + (who.length ? '' : ' none'), '<b>' + v + '%</b><span class="t"><i class="l' + i + '"></i>' + label + '</span>');
+    var w = el('div', 'who');
+    c.appendChild(w); lvlWho.push({ box: w, who: who }); lvls.appendChild(c);
+    if (v) { var seg = el('div', 'l' + i); seg.style.width = v + '%'; lvlBar.appendChild(seg); }
+  });
+  lvlBar.setAttribute('role', 'img');
+  lvlBar.setAttribute('aria-label', D.aiLevels.map(function (l, i) { return pct(lvlWho[i].who.length, P.length) + '% ' + l; }).join(', '));
+  scale.appendChild(lvls);
+  scale.appendChild(lvlBar);
+  var lvlTop = el('div', 'strats-top');
+  lvlTop.appendChild(el('span', 'meta', 'In % van ' + P.length + " collega's"));
+  lvlTop.appendChild(whoButtons(P.concat(['alle']), 'Hoeveelheid AI per collega', function (pick) {
+    lvlWho.forEach(function (l) {
+      l.box.innerHTML = l.who.filter(function (p) { return pick === 'alle' || p === pick; }).map(tag).join('');
+    });
+  }));
+  scale.appendChild(lvlTop);
+
+  // 2.2 manieren: aandeel per manier, namen na een klik
+  var ways = document.getElementById('ways');
+  var wayTop = el('div', 'strats-top');
+  wayTop.appendChild(el('span', 'meta', 'In % van ' + P.length + " collega's"));
+  var wayList = el('div', 'srows');
+  wayTop.appendChild(whoButtons(P, 'Manieren per collega', function (pick) {
+    ways.classList.toggle('picked', !!pick);
+    var j = P.indexOf(pick);
+    wayList.querySelectorAll('.srow').forEach(function (d) {
+      d.querySelector('.sme').innerHTML = pick && d._vals[j + 1] ? '<span class="chip al">doet dit</span>' : '';
+    });
+  }));
+  ways.appendChild(wayTop);
+  D.ways.map(function (r) {
+    return { name: r[0], vals: r, who: P.filter(function (p, j) { return r[j + 1]; }) };
+  }).sort(function (a, b) { return b.who.length - a.who.length; }).forEach(function (r) {
+    var v = pct(r.who.length, P.length), d = el('details', 'srow');
+    d.innerHTML = '<summary><span class="sname">' + r.name + '</span><span class="sbar track" role="img" aria-label="' + v + '% van de collega\'s"><i class="seg-al" style="width:' + v + '%">' + v + '%</i></span><span class="sme"></span><span class="tog" aria-hidden="true"></span></summary>' +
+      '<div class="swho"><div><strong>Doet dit</strong>' + r.who.map(function (p) { return D.names[p]; }).join(', ') + '</div></div>';
+    d._vals = r.vals;
+    wayList.appendChild(d);
+  });
+  ways.appendChild(wayList);
 
   // 3.3 strategieën
   var lab = { al: 'doe ik al', wil: 'wil proberen', niet: 'niet zinvol' };
