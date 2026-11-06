@@ -51,7 +51,7 @@ p { margin: 0; }
 
 /* Tegels: elke tegel zet zijn eigen tekstkleuren */
 .tile { position: relative; padding: 18px 20px; min-width: 0; background: var(--bg, var(--white)); color: var(--ink); }
-.tile, .card, .tbl-wrap, .bars, .scale, .person, .theme, .cov, .keys li {
+.tile, .card, .tbl-wrap, .bars, .scale, .person, .theme, .cov, .keys li, .strats {
   --ink: #000000; --muted: #4a4a4a; --rule: #cfcfcf; --sheet: #ffffff;
 }
 .tile.dark { --bg: var(--coal); --ink: #fff; --muted: #a8a8a8; --rule: #3a3a3a; }
@@ -182,16 +182,55 @@ td.top { vertical-align: top; }
 .chip { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 6px 1px; white-space: nowrap; }
 .chip.al { background: #000; color: #fff; }
 .chip.wil { box-shadow: inset 0 0 0 1px #000; color: #000; }
-#strat th.c, #strat td.c { text-align: left; }
-#strat .chip.niet, #strat .chip.leeg { padding-inline: 0; }
 .chip.niet { color: var(--muted); text-decoration: line-through; }
-.chip.leeg { color: var(--muted); }
 .rk { display: inline-grid; place-items: center; width: 30px; height: 30px; background: var(--grey); font-family: var(--font-display); font-weight: 900; font-size: 16px; font-variant-numeric: tabular-nums; }
 tr.top3 td:first-child { font-weight: 700; }
 tr.top3 { background: #f1f1f1; }
 
+/* Strategieën 3.3: balk per strategie, details per rij of per collega */
+.strats { background: var(--white); color: #000; padding: 20px; display: grid; gap: 16px; }
+.strats-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; align-items: center; }
+.who-btns { display: flex; flex-wrap: wrap; gap: 4px; }
+.who-btns button { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: transparent; color: #000; border: 0; box-shadow: inset 0 0 0 1px #000; padding: 4px 8px 3px; cursor: pointer; }
+.who-btns button:hover { background: var(--grey); }
+.who-btns button[aria-pressed="true"] { background: #000; color: #fff; }
+.srows { border-top: 1px solid var(--rule); }
+.srow { border-bottom: 1px solid var(--rule); }
+.srow:last-child { border-bottom: 0; }
+.srow > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 22px; gap: 8px 16px; align-items: center; padding: 11px 0; font-size: 15px; }
+.srow > summary::-webkit-details-marker { display: none; }
+.srow > summary:hover .sname { text-decoration: underline; }
+.strats.picked .srow > summary { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) 96px 22px; }
+.sme { display: none; }
+.strats.picked .sme { display: block; }
+.sbar { display: flex; height: 24px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sbar i { font-style: normal; display: flex; align-items: center; padding-left: 7px; overflow: hidden; white-space: nowrap; }
+.seg-al { background: #000; color: #fff; }
+.seg-wil { background: var(--grey); color: #000; }
+.seg-niet { background: repeating-linear-gradient(135deg, transparent 0 3px, #999 3px 4px); box-shadow: inset 0 0 0 1px #bbb; color: #000; }
+.srow .tog { width: 18px; height: 18px; align-self: center; }
+.srow .tog::before, .srow .tog::after { left: 2px; right: 2px; top: 8px; height: 2px; }
+.chap[open] .srow:not([open]) .tog::after { transform: rotate(90deg); }
+.swho { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px 20px; padding: 0 0 14px; font-size: 14.5px; }
+.swho strong { display: block; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 620px) {
+  .srow > summary, .strats.picked .srow > summary { grid-template-columns: minmax(0, 1fr) 22px; }
+  .sbar { grid-column: 1 / -1; grid-row: 2; }
+  .sme { grid-column: 1 / -1; grid-row: 3; }
+}
+
 /* Gestapelde balken 3.4 */
 .bars { display: grid; gap: 14px; background: var(--white); color: #000; padding: 20px; }
+.ev-avg { display: grid; gap: 12px; }
+.ev-nums { display: flex; flex-wrap: wrap; gap: 6px 36px; }
+.ev-nums div { display: grid; gap: 2px; }
+.ev-nums b { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(34px, 5vw, 56px); line-height: .9; font-variant-numeric: tabular-nums; }
+.ev-nums span { font-size: 14px; font-weight: 600; }
+.ev-avg .stack { height: 22px; background: none; }
+.ev-avg .stack div { padding: 0; }
+.ev-pick { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.ev-detail { display: grid; gap: 14px; }
+.ev-detail:empty { display: none; }
 .brow { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: center; }
 .brow .name { font-weight: 700; font-size: 15px; display: grid; justify-items: start; gap: 3px; }
 .stack { display: flex; height: 30px; background: repeating-linear-gradient(135deg, transparent 0 5px, #cfcfcf 5px 6px); font-size: 12px; font-weight: 700; }
@@ -202,7 +241,7 @@ tr.top3 { background: #f1f1f1; }
 .brow .remark { grid-column: 2; font-size: 13.5px; color: var(--muted); margin-top: -6px; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13.5px; color: var(--muted); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 12px; height: 12px; display: inline-block; }
+.legend i { width: 12px; height: 12px; display: inline-block; padding: 0; }
 @media (max-width: 620px) { .brow { grid-template-columns: 1fr; } .brow .remark { grid-column: 1; } }
 
 /* Gespreksthema's */
@@ -374,7 +413,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
       <div class="tbl-wrap"><table id="ways"></table></div>
       <p class="note">Hans gebruikt AI op alle manieren. Eva en Rik verbieden het in bepaalde opdrachten en gebruiken het minder breed. Pieter doet alles behalve AI verplichten, en verbiedt het ook in bepaalde opdrachten. Stijn vinkte geen verbod aan en maakt AI nergens verplicht, maar laat het alleen in geselecteerde opdrachten 100% toe. Wim en Marieke maken AI in sommige opdrachten verplicht en laten het in andere niet toe. Olivier laat het in bepaalde opdrachten niet toe. Hans, Rik, Stijn, Pieter, Wim en Marieke gebruiken AI zelf om hun lessen voor te bereiden.</p>
 
-      <h3 class="sub">Welke tools, waarvoor?</h3>
+      <h3 class="sub">Welke AI-tools en waarvoor?</h3>
       <div class="duo">
         <div class="card eva"><span class="tag">Eva</span>
           <ul>
@@ -541,12 +580,13 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
       <p class="note">Pieter verwijst bij deze vraag naar een artikel op <a href="https://dutchdesigndaily.com/stories/design-education-practice-and-archives-in-the-functionally-rational-reality/">Dutch Design Daily</a>.</p>
 
       <h3 class="sub">Strategieën</h3>
-      <div class="tbl-wrap"><table id="strat"></table></div>
+      <p class="note">Gesorteerd op wat het vaakst al gebeurt, in procent van de antwoorden per strategie. Klik op een strategie om te zien wie wat antwoordde, of op een naam om de antwoorden van die collega te zien.</p>
+      <div class="strats" id="strat"></div>
       <p class="note">AI-gebruik vermelden doen zeven van de acht al, Olivier wil het proberen. Een mondelinge verdediging doen Hans, Wim, Marieke en Olivier al, Rik, Stijn en Pieter willen ze proberen. Rik vinkte bij “verworpen opties verantwoorden” zowel “doe ik al” als “wil ik proberen” aan. Pieter deed dat bij de mondelinge verdediging, maar noteert bij de evaluatie “nog niet”: daarom staat hier “wil proberen”. Bij een echte opdrachtgever vinkte Pieter zowel “wil ik proberen” als “niet zinvol in mijn vak” aan.</p>
 
       <h3 class="sub">Product tegenover proces in de evaluatie</h3>
       <div class="bars" id="bars"></div>
-      <p class="note">Percentages zoals opgegeven. Waar ze niet optellen tot 100, is de rest gearceerd. Bij Olivier tellen ze op tot 110; de balk toont de verhouding. Bij Eva tellen in InDesign inzicht in het proces, het eindresultaat en snelheid. In GD2 weegt het proces zwaarder. Bij Marieke hangt de verhouding af van het vak.</p>
+      <p class="note">Klik op een naam voor de cijfers per collega. In het gemiddelde weegt iedereen even zwaar: de cijfers zijn eerst per collega herrekend naar 100%. Art Direction van Hans telt niet mee, omdat eindproduct en mondeling daar samen één punt zijn. Per collega staan de percentages zoals opgegeven: waar ze niet optellen tot 100, is de rest gearceerd, en bij Olivier tellen ze op tot 110. Bij Eva tellen in InDesign inzicht in het proces, het eindresultaat en snelheid. In GD2 weegt het proces zwaarder. Bij Marieke hangt de verhouding af van het vak.</p>
     </div>
   </div></details>
 
@@ -937,18 +977,90 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   }).join('') + '</tbody>';
 
   // 3.3 strategieën
-  var lab = { al: 'doe ik al', wil: 'wil proberen', niet: 'niet zinvol', '': '' };
-  document.getElementById('strat').innerHTML = head('Strategie') + '<tbody>' + D.strategies.map(function (r) {
-    return '<tr><td>' + r[0] + '</td>' + P.map(function (p, j) {
-      var v = r[j + 1];
-      return '<td class="c ' + p + '"><span class="chip ' + (v || 'leeg') + '">' + lab[v] + '</span></td>';
-    }).join('') + '</tr>';
-  }).join('') + '</tbody>';
+  var lab = { al: 'doe ik al', wil: 'wil proberen', niet: 'niet zinvol' };
+  var strat = document.getElementById('strat');
+  var sRows = D.strategies.map(function (r) {
+    var g = { al: [], wil: [], niet: [] };
+    P.forEach(function (p, j) { if (r[j + 1]) g[r[j + 1]].push(p); });
+    var n = g.al.length + g.wil.length + g.niet.length;
+    var al = Math.round(g.al.length / n * 100), niet = Math.round(g.niet.length / n * 100);
+    return { name: r[0], vals: r, g: g, al: al, niet: niet, wil: g.wil.length ? 100 - al - niet : 0 };
+  }).sort(function (a, b) { return b.al - a.al || b.wil - a.wil; });
+  function nameList(l) { return l.map(function (p) { return D.names[p]; }).join(', '); }
+  var top = el('div', 'strats-top');
+  top.appendChild(el('div', 'legend', '<span><i class="seg-al"></i>Doe ik al</span><span><i class="seg-wil"></i>Wil proberen</span><span><i class="seg-niet"></i>Niet zinvol</span>'));
+  var btns = el('div', 'who-btns');
+  btns.setAttribute('role', 'group');
+  btns.setAttribute('aria-label', 'Antwoorden per collega');
+  P.forEach(function (p) {
+    var b = el('button', '', D.names[p]);
+    b.type = 'button'; b.dataset.p = p; b.setAttribute('aria-pressed', 'false');
+    btns.appendChild(b);
+  });
+  top.appendChild(btns);
+  strat.appendChild(top);
+  var list = el('div', 'srows');
+  sRows.forEach(function (r) {
+    var d = el('details', 'srow');
+    var bar = [['al', 'seg-al'], ['wil', 'seg-wil'], ['niet', 'seg-niet']].map(function (k) {
+      return r[k[0]] ? '<i class="' + k[1] + '" style="width:' + r[k[0]] + '%">' + r[k[0]] + '%</i>' : '';
+    }).join('');
+    var label = r.al + '% doet dit al, ' + r.wil + '% wil het proberen' + (r.niet ? ', ' + r.niet + '% vindt het niet zinvol' : '');
+    d.innerHTML = '<summary><span class="sname">' + r.name + '</span><span class="sbar" role="img" aria-label="' + label + '">' + bar + '</span><span class="sme"></span><span class="tog" aria-hidden="true"></span></summary>' +
+      '<div class="swho">' + ['al', 'wil', 'niet'].filter(function (k) { return r.g[k].length; }).map(function (k) {
+        return '<div><strong>' + lab[k] + '</strong>' + nameList(r.g[k]) + '</div>';
+      }).join('') + '</div>';
+    d._vals = r.vals;
+    list.appendChild(d);
+  });
+  strat.appendChild(list);
+  btns.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var on = b.getAttribute('aria-pressed') !== 'true';
+    btns.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', String(on));
+    strat.classList.toggle('picked', on);
+    var j = P.indexOf(b.dataset.p);
+    list.querySelectorAll('.srow').forEach(function (d) {
+      var v = d._vals[j + 1];
+      d.querySelector('.sme').innerHTML = on && v ? '<span class="chip ' + v + '">' + lab[v] + '</span>' : '';
+    });
+  });
 
-  // 3.4 balken
+  // 3.4 gemiddelde over de collega's, met doorklik per collega
   var bars = document.getElementById('bars');
-  bars.appendChild(el('div', 'legend', '<span><i style="background:#000"></i>Eindproduct</span><span><i style="background:var(--blue)"></i>Proces</span><span><i style="background:var(--pink)"></i>Mondelinge verdediging</span><span><i style="background:repeating-linear-gradient(135deg,transparent 0 3px,#999 3px 4px)"></i>Niet verdeeld</span>'));
-  D.evaluation.forEach(function (r) {
+  var evPeople = P.filter(function (p) { return D.evaluation.some(function (r) { return r.who === p; }); });
+  // Elke collega telt één keer: per vak herrekend naar 100, dan per collega gemiddeld. Een gezamenlijk totaalpunt is niet te splitsen en telt niet mee.
+  var shares = evPeople.map(function (p) {
+    var vakken = D.evaluation.filter(function (r) { return r.who === p && !r.joint; });
+    var t = { product: 0, proces: 0, mondeling: 0 };
+    vakken.forEach(function (r) {
+      var som = r.product + r.proces + r.mondeling;
+      Object.keys(t).forEach(function (k) { t[k] += r[k] / som * 100 / vakken.length; });
+    });
+    return t;
+  });
+  function mean(k) { return shares.reduce(function (a, t) { return a + t[k]; }, 0) / shares.length; }
+  var avgP = Math.round(mean('product')), avgM = Math.round(mean('mondeling')), avgR = 100 - avgP - avgM;
+  var avg = el('div', 'ev-avg');
+  avg.innerHTML = '<span class="meta">Gemiddelde van ' + evPeople.length + ' collega\'s</span><div class="ev-nums"><div><b>' + avgP + '%</b><span>Eindproduct</span></div><div><b>' + avgR + '%</b><span>Proces</span></div><div><b>' + avgM + '%</b><span>Mondelinge verdediging</span></div></div>' +
+    '<div class="stack" role="img" aria-label="Gemiddeld ' + avgP + '% eindproduct, ' + avgR + '% proces, ' + avgM + '% mondelinge verdediging"><div class="seg-p" style="width:' + avgP + '%"></div><div class="seg-r" style="width:' + avgR + '%"></div><div class="seg-m" style="width:' + avgM + '%"></div></div>';
+  bars.appendChild(avg);
+  var pick = el('div', 'ev-pick');
+  pick.appendChild(el('div', 'legend', '<span><i style="background:#000"></i>Eindproduct</span><span><i style="background:var(--blue)"></i>Proces</span><span><i style="background:var(--pink)"></i>Mondelinge verdediging</span>'));
+  var evBtns = el('div', 'who-btns');
+  evBtns.setAttribute('role', 'group');
+  evBtns.setAttribute('aria-label', 'Verdeling per collega');
+  evPeople.concat(['alle']).forEach(function (p) {
+    var b = el('button', '', p === 'alle' ? 'Iedereen' : D.names[p]);
+    b.type = 'button'; b.dataset.p = p; b.setAttribute('aria-pressed', 'false');
+    evBtns.appendChild(b);
+  });
+  pick.appendChild(evBtns);
+  bars.appendChild(pick);
+  var detail = el('div', 'ev-detail');
+  bars.appendChild(detail);
+  function evRow(r) {
     var row = el('div', 'brow');
     row.appendChild(el('div', 'name', tag(r.who) + '<span>' + r.vak + '</span>'));
     var st = el('div', 'stack');
@@ -960,7 +1072,15 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     });
     row.appendChild(st);
     if (r.remark) row.appendChild(el('div', 'remark', r.remark));
-    bars.appendChild(row);
+    return row;
+  }
+  evBtns.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var on = b.getAttribute('aria-pressed') !== 'true';
+    evBtns.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', String(on));
+    detail.innerHTML = '';
+    if (on) D.evaluation.filter(function (r) { return b.dataset.p === 'alle' || r.who === b.dataset.p; }).forEach(function (r) { detail.appendChild(evRow(r)); });
   });
 
   // 5.3 competenties: alleen wie rangschikte, gesorteerd op gemiddelde plaats
