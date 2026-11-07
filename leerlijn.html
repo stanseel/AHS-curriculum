@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="nl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI-leerlijn Crossmedia Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: zelfde tegelraster als de enquêtesite. Per jaar een kleurband met daaronder de vakken als witte kaarten, elk met een AI-label. Bewust één donkere look. */
+:root {
+  color-scheme: dark;
+  --black: #000000;
+  --coal: #1b1b1b;
+  --white: #ffffff;
+  --grey: #dddddd;
+  --green: #33fc09;
+  --orange: #ff5d01;
+  --blue: #007aff;
+  --pink: #fe6efd;
+  --ink: var(--white);
+  --muted: #b3b3b3;
+  --gap: 6px;
+  --font-display: "Archivo", "Arial Black", Impact, sans-serif;
+  --font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; }
+html { background: var(--black); }
+body {
+  margin: 0;
+  background: var(--black); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+.heavy { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: .9; letter-spacing: -.01em; hyphens: manual; overflow-wrap: break-word; }
+/* Grote koppen mogen afbreken, kleine niet */
+.hero h1, .band h2 { hyphens: auto; }
+@media (max-width: 480px) { .courses .course h4 { font-size: 16px; } }
+.meta { font-size: 10px; font-weight: 500; line-height: 1.2; text-transform: uppercase; letter-spacing: .04em; }
+
+.tile { position: relative; padding: 18px 20px; min-width: 0; background: var(--bg, var(--white)); color: #000; }
+.t-white { --bg: var(--white); } .t-green { --bg: var(--green); } .t-orange { --bg: var(--orange); }
+.t-blue { --bg: var(--blue); } .t-pink { --bg: var(--pink); }
+.corner { position: absolute; top: 10px; left: 12px; right: 12px; display: flex; justify-content: space-between; gap: 12px; }
+.corner span:nth-child(2) { text-align: right; }
+
+/* Zwevende navigatie */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--black); }
+.topnav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: var(--black); padding-block: 6px; }
+.topnav ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.topnav ol::-webkit-scrollbar { display: none; }
+.topnav li { flex: 1 0 auto; }
+.topnav a { display: block; text-align: center; white-space: nowrap; color: var(--white); text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; line-height: 1.2; padding: 8px 10px 7px; background: var(--coal); }
+.topnav a:hover { color: var(--orange); }
+.topnav a.back { background: var(--white); color: #000; }
+.topnav a.back:hover { background: var(--orange); color: #000; }
+section { scroll-margin-top: 54px; }
+
+.slug { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding-block: 16px 10px; color: var(--muted); }
+
+/* Kop */
+.hero { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); }
+.hero .title { grid-column: span 4; grid-row: span 2; min-height: 340px; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 48px; }
+.hero h1 { font-size: clamp(42px, 7.6vw, 100px); }
+.hero .lead { grid-column: span 2; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 44px; font-size: 19px; font-weight: 500; line-height: 1.35; }
+.hero .caveat { grid-column: span 2; padding-top: 44px; display: flex; align-items: flex-end; }
+.hero .caveat p { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 2.4vw, 30px); line-height: .95; }
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr 1fr; }
+  .hero .title { grid-column: span 2; grid-row: auto; min-height: 260px; }
+  .hero .lead, .hero .caveat { grid-column: span 2; }
+}
+
+/* Banden per deel */
+section { margin-top: 72px; }
+.band { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 10px 24px; align-items: end; padding: 44px 20px 20px; min-height: 160px; }
+.band h2 { font-size: clamp(32px, 5.2vw, 66px); }
+.band .gist { font-size: 16px; font-weight: 500; line-height: 1.35; max-width: 44ch; }
+@media (max-width: 700px) { .band { grid-template-columns: minmax(0, 1fr); } }
+.body { display: grid; gap: 28px; padding: clamp(24px, 4vw, 40px) clamp(14px, 3.6vw, 40px); background: var(--coal); border: solid var(--edge, var(--white)); border-width: 0 6px 6px; }
+.t-orange-edge { --edge: var(--orange); } .t-pink-edge { --edge: var(--pink); } .t-green-edge { --edge: var(--green); }
+h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(19px, 2.2vw, 24px); line-height: .95; color: var(--white); }
+.group { display: grid; gap: 14px; }
+
+/* Vertrekpunt */
+.keys { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+.keys li { background: var(--white); color: #000; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.keys strong { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 21px; line-height: .95; }
+.keys span { font-size: 15.5px; line-height: 1.4; }
+
+/* Vakken */
+.courses { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: var(--gap); }
+.course { background: var(--white); color: #000; padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.course .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; color: #4a4a4a; }
+.course h4 { margin: 0; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 19px; line-height: .95; hyphens: manual; overflow-wrap: break-word; margin-top: 26px; }
+.course p { font-size: 15px; line-height: 1.45; }
+.course ul { margin: 0; padding-left: 18px; font-size: 15px; line-height: 1.45; }
+.course li + li { margin-top: 4px; }
+.course.new { background: var(--green); }
+.course.new .top { color: #000; }
+
+/* AI-labels */
+.lab { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 3px 7px 2px; white-space: nowrap; line-height: 1.3; }
+.lab.geen { background: var(--grey); color: #000; }
+.lab.over { box-shadow: inset 0 0 0 1px #000; color: #000; }
+.lab.hulp { background: #4a4a4a; color: #fff; }
+.lab.regie { background: #000; color: #fff; }
+.course.new .lab.over { box-shadow: inset 0 0 0 1px #000; }
+.labels { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.labels > div { background: var(--white); color: #000; padding: 16px 18px; display: grid; gap: 8px; align-content: start; font-size: 15px; line-height: 1.4; }
+@media (max-width: 860px) { .labels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .labels { grid-template-columns: minmax(0, 1fr); } }
+
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gap); }
+.card { background: var(--white); color: #000; padding: 18px 20px 20px; display: grid; gap: 8px; align-content: start; }
+.card h4 { margin: 0; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 21px; line-height: .95; }
+.card p { font-size: 15.5px; line-height: 1.45; }
+
+.note { font-size: 15px; color: var(--muted); max-width: 72ch; }
+
+footer.end { margin-top: 72px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
+footer.end a.tile { text-decoration: none; }
+footer.end a.tile:hover { --bg: var(--orange); }
+@media (max-width: 620px) { footer.end { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+  <nav class="topnav" aria-label="Snel naar een deel">
+    <ol>
+      <li><a class="back" href="./">← Enquête</a></li>
+      <li><a href="#vertrek">Vertrekpunt</a></li>
+      <li><a href="#labels">Labels</a></li>
+      <li><a href="#jaar1">Schijf 1</a></li>
+      <li><a href="#jaar2">Schijf 2</a></li>
+      <li><a href="#jaar3">Schijf 3</a></li>
+      <li><a href="#altijd">Altijd</a></li>
+    </ol>
+  </nav>
+  <div class="slug meta">
+    <span>GDM · Arteveldehogeschool</span>
+    <span>Voorstel om te bespreken</span>
+    <span>Concept 07.11.2026</span>
+  </div>
+
+  <header class="hero">
+    <div class="tile t-orange title">
+      <div class="corner meta"><span>Voorstel</span><span>Crossmedia Design</span></div>
+      <h1 class="heavy">Een leer&shy;lijn voor AI</h1>
+    </div>
+    <div class="tile t-white lead">
+      <div class="corner meta"><span>Vraag</span><span>Schijf 1 tot 3</span></div>
+      <p>Hoe bouwen we AI stap voor stap op, van de eerste les Illustrator tot het afstudeerproject?</p>
+    </div>
+    <div class="tile t-blue caveat">
+      <div class="corner meta"><span>Let op</span><span>Concept</span></div>
+      <p>Eerst zelf kunnen, dan AI regisseren</p>
+    </div>
+  </header>
+
+  <section id="vertrek">
+    <div class="tile t-white band">
+      <div class="corner meta"><span>Vertrekpunt</span><span>Uit de enquête</span></div>
+      <h2 class="heavy">Wat er al is</h2>
+      <p class="gist">De leerlijn bouwt op wat acht collega's vandaag al doen en willen proberen.</p>
+    </div>
+    <div class="body">
+      <ul class="keys">
+        <li><strong>Gevraagd door collega's</strong><span>Hans vraagt om een duidelijke leerlijn, Marieke om afspraken over alle vakken heen. Hans ziet AI in schijf 2 de manuele technieken uit schijf 1 verdringen.</span></li>
+        <li><strong>Het proces telt</strong><span>Alle acht beoordelen het proces, niet alleen het eindproduct. Zeven van de acht laten AI-gebruik al vermelden.</span></li>
+        <li><strong>Een lappendeken van regels</strong><span>Iedereen laat AI in sommige opdrachten toe en in andere niet. Een leerlijn maakt van die wisseling een bewuste opbouw.</span></li>
+        <li><strong>Kilometers op de teller</strong><span>De grootste zorg: studenten laten AI denken in hun plaats en verliezen de manuele basis. Eerst zelf kunnen.</span></li>
+        <li><strong>Techniek én AI</strong><span>De ene collega wil blijven investeren in techniek, de andere ziet AI het technische overnemen. Een volgorde verzoent beide.</span></li>
+        <li><strong>Wat collega's willen proberen</strong><span>Een standpunt vragen in plaats van een deliverable, een onverwachte wending, verworpen opties laten verantwoorden.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="labels">
+    <div class="tile t-pink band">
+      <div class="corner meta"><span>Op elke briefing</span><span>Vier labels</span></div>
+      <h2 class="heavy">Een label per opdracht</h2>
+      <p class="gist">Elke briefing zegt bovenaan wat mag. Zo herkent de student de opbouw in plaats van telkens nieuwe regels.</p>
+    </div>
+    <div class="body t-pink-edge">
+      <div class="labels">
+        <div><span class="lab geen">Zonder AI</span><p>De student bouwt de basis zelf op. We leggen uit waarom.</p></div>
+        <div><span class="lab over">Over AI</span><p>De student leert hoe AI werkt, bekijkt output kritisch of bespreekt de impact.</p></div>
+        <div><span class="lab hulp">AI als hulp</span><p>AI mag in afgesproken stappen, met vermelding en verantwoording.</p></div>
+        <div><span class="lab regie">AI in regie</span><p>De student kiest zelf welke tools, en verdedigt die keuze.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jaar1">
+    <div class="tile t-white band">
+      <div class="corner meta"><span>Schijf 1 · Semester 1 en 2</span><span>Fundament</span></div>
+      <h2 class="heavy">Eerst zelf kunnen</h2>
+      <p class="gist">Semester 1 zonder generatieve AI, wel met uitleg over hoe ze werkt. In semester 2 voor het eerst kijken naar AI-output.</p>
+    </div>
+    <div class="body">
+      <div class="group">
+        <h3 class="sub">Semester 1</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab over">Over AI</span></div><h4>Media technology</h4><p>Hoe werkt AI: modellen, trainingsdata, wat een prompt doet. Het vak noemt AI vandaag al.</p></article>
+          <article class="course"><div class="top meta"><span>3 + 3 + 5 studiepunten</span><span class="lab geen">Zonder AI</span></div><h4>Illustrator, Photoshop, Lay-out software</h4><p>"Kilometers op de teller", ook zonder generatief vullen in Photoshop. We leggen uit waarom eerst zonder.</p></article>
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab geen">Zonder AI</span></div><h4>Graphic design 1</h4><p>Vorm, compositie, kleur en typografie leren door het zelf te doen. Hoogstens één les waarin de docent AI-output toont en de klas die bespreekt.</p></article>
+          <article class="course"><div class="top meta"><span>5 + 4 studiepunten</span><span class="lab geen">Zonder AI</span></div><h4>Creative studio, Design principles</h4><p>Het ideeënwerk blijft menselijk. Hier ontstaat de eigen designermindset.</p></article>
+        </div>
+      </div>
+      <div class="group">
+        <h3 class="sub">Semester 2</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Design research</h4><p>AI als onderzoeksassistent, met de plicht om elke bron zelf na te gaan.</p></article>
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab over">Over AI</span></div><h4>Creative business essentials</h4><p>Het juridisch en ethisch kader zit al in het vak. Voeg auteursrecht en licenties van AI-beeld toe.</p></article>
+          <article class="course"><div class="top meta"><span>10 studiepunten</span><span class="lab over">Over AI</span></div><h4>Graphic design 2</h4><p>De eerste opdracht "AI tegen mij": de student krijgt een AI-voorstel, benoemt wat zwak is en maakt een betere versie.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jaar2">
+    <div class="tile t-orange band">
+      <div class="corner meta"><span>Schijf 2 · Semester 3 en 4</span><span>Integratie</span></div>
+      <h2 class="heavy">AI inzetten en verant&shy;woorden</h2>
+      <p class="gist">AI mag in afgesproken stappen. Elke keuze wordt onderbouwd, ook de verworpen opties.</p>
+    </div>
+    <div class="body t-orange-edge">
+      <div class="group">
+        <h3 class="sub">Semester 3</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Creative business studio 1</h4><p>AI speelt de klant of de doelgroep. De student leert een briefing verdedigen.</p></article>
+          <article class="course"><div class="top meta"><span>10 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Graphic design 3</h4><p>AI toegelaten in het onderzoek. Ontwerpbeslissingen strategisch en visueel onderbouwen, met de verworpen opties erbij.</p></article>
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>UX/UI design 2</h4><p>AI-tools voor snelle prototypes. De les: AI vervangt geen test met echte gebruikers.</p></article>
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab geen">Zonder AI</span></div><h4>Print and publishing 1</h4><p>Papier, print en veredeling blijven handwerk en materiaalkennis.</p></article>
+        </div>
+      </div>
+      <div class="group">
+        <h3 class="sub">Semester 4</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Creative business studio 2</h4><p>Campagnevarianten met AI. Bij de wettelijke regels hoort ook: wanneer vermeld je AI-beeld in reclame?</p></article>
+          <article class="course"><div class="top meta"><span>10 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Graphic design 4</h4><p>Complexe briefings met professioneel inzetbare resultaten en feeling voor hedendaagse esthetiek en visuele trends. AI mag mee verkennen, maar de eigen visuele keuzes maken het verschil. Met een mondelinge verdediging.</p></article>
+          <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>2D Motion design</h4><p>AI voor storyboard en previsualisatie. Timing en keyframing blijven handwerk.</p></article>
+          <article class="course"><div class="top meta"><span>5 + 5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Print and publishing 2, UX/UI design 3</h4><p>AI voor automatisering, zoals InDesign-scripts bij volumineuze publicaties, en voor interacties in prototypes.</p></article>
+          <article class="course new"><div class="top meta"><span>Keuzevak · 5 studiepunten</span><span class="lab regie">AI in regie</span></div><h4>Nieuw: AI in de creatieve workflow</h4><p>De keuzevakken worden elk jaar vernieuwd. Een kans voor wie verder wil gaan.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jaar3">
+    <div class="tile t-white band">
+      <div class="corner meta"><span>Schijf 3 · Semester 5 en 6</span><span>Regie</span></div>
+      <h2 class="heavy">Regisseren en positie innemen</h2>
+      <p class="gist">De student kiest zelf zijn tools, werkt voor een echte opdrachtgever en neemt een eigen standpunt in.</p>
+    </div>
+    <div class="body">
+      <div class="group">
+        <h3 class="sub">Semester 5</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>12 studiepunten</span><span class="lab regie">AI in regie</span></div><h4>Expert track</h4><ul><li><b>Brand Design:</b> generatieve merksystemen</li><li><b>Publication Design:</b> automatisering en beeldredactie</li><li><b>UX/UI Design:</b> AI-functies ontwerpen</li><li><b>Motion Design:</b> generatieve video</li></ul></article>
+          <article class="course"><div class="top meta"><span>9 studiepunten</span><span class="lab regie">AI in regie</span></div><h4>Expedition</h4><p>AI als teamlid. Het team spreekt af wie wat met AI doet, en dat wordt mee geëvalueerd.</p></article>
+          <article class="course"><div class="top meta"><span>6 studiepunten</span><span class="lab regie">AI in regie</span></div><h4>Creative business studio 3</h4><p>Een product of dienst waarin AI een rol speelt, of net bewust niet.</p></article>
+          <article class="course"><div class="top meta"><span>3 studiepunten</span><span class="lab over">Over AI</span></div><h4>Media ethics</h4><p>Gaat vandaag al over de ethische impact van AI. De student schrijft een eigen standpunt en neemt dat mee naar het afstudeerproject.</p></article>
+        </div>
+      </div>
+      <div class="group">
+        <h3 class="sub">Semester 6</h3>
+        <div class="courses">
+          <article class="course"><div class="top meta"><span>15 studiepunten</span><span class="lab over">Over AI</span></div><h4>Afstudeerstage</h4><p>Een kleine stage-opdracht: hoe gebruikt het bureau AI? Zo krijgt de opleiding elk jaar signalen uit het werkveld.</p></article>
+          <article class="course"><div class="top meta"><span>15 studiepunten</span><span class="lab regie">AI in regie</span></div><h4>Afstudeerproject</h4><p>Een AI-verklaring en een verdediging van de eigen keuzes.</p></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="altijd">
+    <div class="tile t-green band">
+      <div class="corner meta"><span>Door alle jaren</span><span>Afspraken</span></div>
+      <h2 class="heavy">Wat altijd geldt</h2>
+      <p class="gist">Drie afspraken die in elk vak terugkomen.</p>
+    </div>
+    <div class="body t-green-edge">
+      <div class="duo">
+        <div class="card"><h4>Eén manier van vermelden</h4><p>Zeven van de acht collega's laten AI-gebruik al vermelden, elk op hun eigen manier. Eén vaste vorm voor de hele opleiding.</p></div>
+        <div class="card"><h4>Kritisch denken als rode draad</h4><p>Elk jaar heeft minstens één opdracht waarin ethiek of auteurschap aan bod komt.</p></div>
+        <div class="card"><h4>Steun voor docenten</h4><p>Vorming, licenties en overleg tussen collega's, zoals in de enquête gevraagd.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="end">
+    <a class="tile t-white" href="./"><div class="corner meta"><span>Terug</span><span>→</span></div><p style="font-weight:600">Naar de resultaten van de enquête</p></a>
+    <div class="tile t-orange"><div class="corner meta"><span>Opleiding</span><span></span></div><p style="font-weight:600">Grafische en Digitale Media · Arteveldehogeschool</p></div>
+    <div class="tile t-blue"><div class="corner meta"><span>Stand</span><span></span></div><p style="font-weight:600">Concept, nog niet besproken</p></div>
+  </footer>
+</div>
+</html>
