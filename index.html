@@ -1033,6 +1033,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
     return { name: r[0], vals: r, who: P.filter(function (p, j) { return r[j + 1]; }) };
   }).sort(function (a, b) { return b.who.length - a.who.length; }).forEach(function (r) {
     var v = pct(r.who.length, P.length), d = el('details', 'srow');
+    d.setAttribute('name', 'ways');
     d.innerHTML = '<summary><span class="sname">' + r.name + '</span><span class="sbar track" role="img" aria-label="' + v + '% van de collega\'s"><i class="seg-al" style="width:' + v + '%">' + v + '%</i></span><span class="sme"></span><span class="tog" aria-hidden="true"></span></summary>' +
       '<div class="swho"><div><strong>Doet dit</strong>' + r.who.map(function (p) { return D.names[p]; }).join(', ') + '</div></div>';
     d._vals = r.vals;
@@ -1066,6 +1067,7 @@ footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
   var list = el('div', 'srows');
   sRows.forEach(function (r) {
     var d = el('details', 'srow');
+    d.setAttribute('name', 'strat');
     var bar = [['al', 'seg-al'], ['wil', 'seg-wil'], ['niet', 'seg-niet']].map(function (k) {
       return r[k[0]] ? '<i class="' + k[1] + '" style="width:' + r[k[0]] + '%">' + r[k[0]] + '%</i>' : '';
     }).join('');
