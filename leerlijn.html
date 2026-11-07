@@ -125,8 +125,48 @@ h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%;
 .card { background: var(--white); color: #000; padding: 18px 20px 20px; display: grid; gap: 8px; align-content: start; }
 .card h4 { margin: 0; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 21px; line-height: .95; }
 .card p { font-size: 15.5px; line-height: 1.45; }
+.card.wide { grid-column: 1 / -1; }
+.roles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px 24px; margin-top: 10px; padding-top: 14px; border-top: 1px solid #cfcfcf; }
+.roles b { display: block; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; }
+.roles p { margin-top: 4px; font-size: 15px; }
+@media (max-width: 860px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .roles { grid-template-columns: minmax(0, 1fr); } }
 
 .note { font-size: 15px; color: var(--muted); max-width: 72ch; }
+
+/* Overzicht: tijdslijn per schijf en semester */
+.tl { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); margin-top: var(--gap); }
+.tl-s { grid-row: 1; grid-column: span 2; padding: 34px 16px 14px; min-height: 0; }
+.tl-s:nth-of-type(1) { grid-column: 1 / 3; } .tl-s:nth-of-type(2) { grid-column: 3 / 5; } .tl-s:nth-of-type(3) { grid-column: 5 / 7; }
+.tl-s h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(18px, 2vw, 24px); line-height: .95; }
+.tl-sem { grid-row: 2; background: var(--white); color: #000; padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 10px; text-decoration: none; min-width: 0; }
+.tl-sem:hover { background: var(--grey); }
+.tl-sem .n { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 13px; text-transform: uppercase; letter-spacing: .02em; }
+.tl-lab { align-self: flex-start; }
+.tl-sem ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 14px; line-height: 1.3; }
+.tl-sem li { padding-left: 12px; position: relative; }
+.tl-sem li::before { content: ""; position: absolute; left: 0; top: .45em; width: 6px; height: 6px; background: #000; }
+.tl-thread { grid-row: 3; grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 14px 16px; }
+.tl-thread b { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: 15px; }
+.tl-thread span { font-size: 15px; font-weight: 500; }
+/* Schijven als pijlen: 1 en 2 wijzen naar de volgende, 3 sluit af */
+.tl-s { --tip: 24px; }
+.tl-s:nth-of-type(1) { clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%); padding-right: calc(var(--tip) + 12px); }
+.tl-s:nth-of-type(2) { clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%, var(--tip) 50%); padding-inline: calc(var(--tip) + 12px); }
+.tl-s:nth-of-type(3) { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--tip) 50%); padding-left: calc(var(--tip) + 12px); }
+.tl-s:nth-of-type(2) .corner, .tl-s:nth-of-type(3) .corner { left: calc(var(--tip) + 12px); }
+/* punt en inkeping in elkaar schuiven, zodat de zwarte voeg even dik is als tussen de andere blokken */
+.tl-s:nth-of-type(2), .tl-s:nth-of-type(3) { margin-left: calc(-1 * var(--tip) + 0.5px); }
+.tl-s:nth-of-type(1) .corner, .tl-s:nth-of-type(2) .corner { right: calc(var(--tip) + 12px); }
+@media (max-width: 760px) {
+  .tl-s:nth-of-type(n) { clip-path: none; padding-inline: 16px; margin-left: 0; }
+  .tl-s:nth-of-type(n) .corner { left: 12px; right: 12px; }
+  .tl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tl-s, .tl-sem, .tl-thread { grid-row: auto; }
+  .tl-s:nth-of-type(n) { grid-column: 1 / -1; }
+  .tl-thread { grid-column: 1 / -1; }
+}
+@media (max-width: 420px) { .tl { grid-template-columns: minmax(0, 1fr); } }
 
 footer.end { margin-top: 72px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
 footer.end .tile { min-height: 110px; display: flex; align-items: flex-end; }
@@ -139,6 +179,7 @@ footer.end a.tile:hover { --bg: var(--orange); }
   <nav class="topnav" aria-label="Snel naar een deel">
     <ol>
       <li><a class="back" href="./">← Enquête</a></li>
+      <li><a href="#overzicht">Overzicht</a></li>
       <li><a href="#vertrek">Vertrekpunt</a></li>
       <li><a href="#labels">Labels</a></li>
       <li><a href="#jaar1">Schijf 1</a></li>
@@ -167,6 +208,26 @@ footer.end a.tile:hover { --bg: var(--orange); }
       <p>Eerst zelf kunnen, dan AI regisseren</p>
     </div>
   </header>
+
+  <section id="overzicht" style="margin-top: 72px">
+    <div class="tile t-white band">
+      <div class="corner meta"><span>Overzicht</span><span>Schijf 1 tot 3</span></div>
+      <h2 class="heavy">In één oog&shy;opslag</h2>
+      <p class="gist">Per semester het belangrijkste AI-label en de sleutelmomenten.</p>
+    </div>
+    <div class="tl">
+      <div class="tile t-white tl-s"><div class="corner meta"><span>Schijf 1</span><span>Fundament</span></div><h3>Eerst zelf kunnen</h3></div>
+      <a class="tl-sem" href="#jaar1" data-sem="1"><span class="n">Semester 1</span><span class="tl-lab"></span><ul><li>Basis zonder generatieve AI</li><li>Media technology: hoe AI werkt</li></ul></a>
+      <a class="tl-sem" href="#jaar1" data-sem="2"><span class="n">Semester 2</span><span class="tl-lab"></span><ul><li>Eerste opdracht "Maak het beter dan de AI"</li><li>AI als onderzoeksassistent</li></ul></a>
+      <div class="tile t-orange tl-s"><div class="corner meta"><span>Schijf 2</span><span>Integratie</span></div><h3>AI inzetten en verantwoorden</h3></div>
+      <a class="tl-sem" href="#jaar2" data-sem="3"><span class="n">Semester 3</span><span class="tl-lab"></span><ul><li>AI speelt de klant</li><li>Verworpen opties verantwoorden</li></ul></a>
+      <a class="tl-sem" href="#jaar2" data-sem="4"><span class="n">Semester 4</span><span class="tl-lab"></span><ul><li>Mondelinge verdediging</li><li>Keuzevak AI in de creatieve workflow</li></ul></a>
+      <div class="tile t-white tl-s"><div class="corner meta"><span>Schijf 3</span><span>Regie</span></div><h3>Regisseren en positie innemen</h3></div>
+      <a class="tl-sem" href="#jaar3" data-sem="5"><span class="n">Semester 5</span><span class="tl-lab"></span><ul><li>Expert track en Expedition: eigen toolkeuze</li><li>Eigen standpunt in Media ethics</li></ul></a>
+      <a class="tl-sem" href="#jaar3" data-sem="6"><span class="n">Semester 6</span><span class="tl-lab"></span><ul><li>Stage: hoe gebruikt het bureau AI?</li><li>Afstudeerproject met AI-verklaring</li></ul></a>
+      <div class="tile t-green tl-thread"><b>Rode draad</b><span>Kritisch denken: sparringpartner, tegengas geven, bewaker van visuele kwaliteit.</span></div>
+    </div>
+  </section>
 
   <section id="vertrek">
     <div class="tile t-white band">
@@ -223,7 +284,7 @@ footer.end a.tile:hover { --bg: var(--orange); }
         <div class="courses">
           <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab hulp">AI als hulp</span></div><h4>Design research</h4><p>AI als onderzoeksassistent, met de plicht om elke bron zelf na te gaan.</p></article>
           <article class="course"><div class="top meta"><span>5 studiepunten</span><span class="lab over">Over AI</span></div><h4>Creative business essentials</h4><p>Het juridisch en ethisch kader zit al in het vak. Voeg auteursrecht en licenties van AI-beeld toe.</p></article>
-          <article class="course"><div class="top meta"><span>10 studiepunten</span><span class="lab over">Over AI</span></div><h4>Graphic design 2</h4><p>De eerste opdracht "AI tegen mij": de student krijgt een AI-voorstel, benoemt wat zwak is en maakt een betere versie.</p></article>
+          <article class="course"><div class="top meta"><span>10 studiepunten</span><span class="lab over">Over AI</span></div><h4>Graphic design 2</h4><p>De eerste opdracht "Maak het beter dan de AI": de docent genereert een AI-oplossing voor een briefing. De student benoemt wat goed en zwak is, maakt een betere versie en toont aan waarom die beter is.</p></article>
         </div>
       </div>
     </div>
@@ -288,12 +349,20 @@ footer.end a.tile:hover { --bg: var(--orange); }
     <div class="tile t-green band">
       <div class="corner meta"><span>Door alle jaren</span><span>Afspraken</span></div>
       <h2 class="heavy">Wat altijd geldt</h2>
-      <p class="gist">Drie afspraken die in elk vak terugkomen.</p>
+      <p class="gist">Vier afspraken die in elk vak terugkomen.</p>
     </div>
     <div class="body t-green-edge">
       <div class="duo">
+        <div class="card wide"><h4>Kritisch denken als rode draad</h4><p>De grafisch ontwerper van morgen is een kritische denker. Dat oefent de student in elke schijf: van AI-output afbreken in schijf 1 tot een eigen standpunt verdedigen in het afstudeerproject.</p>
+          <div class="roles">
+            <div><b>Sparringpartner</b><p>Stelt de briefing in vraag en zoekt de echte vraag achter de vraag van de klant.</p></div>
+            <div><b>Tegengas geven</b><p>Durft nee te zeggen en een beter voorstel te doen, aan een klant en aan een AI-tool.</p></div>
+            <div><b>Bewaker van visuele kwaliteit</b><p>Herkent generieke output en tilt het werk naar een hoger niveau.</p></div>
+            <div><b>Bewust van de impact</b><p>Denkt na over ethiek, auteurschap en wat een ontwerp doet met zijn publiek.</p></div>
+          </div>
+        </div>
+        <div class="card"><h4>Bewijs van eigen werk</h4><p>Geen beoordeling zonder procesdossier. Schetsen, tussenversies, verworpen opties en een AI-verklaring horen bij elke opdracht. Ontbreken ze, dan is de competentie niet aangetoond, net zoals bij een ontbrekend onderdeel.</p><p>Het dossier is zelf ontworpen, met de lezer in gedachten: de docent moet het vlot kunnen lezen en interpreteren. Geen bundel met alles erin, maar een helder overzicht van de keuzes.</p></div>
         <div class="card"><h4>Eén manier van vermelden</h4><p>Zeven van de acht collega's laten AI-gebruik al vermelden, elk op hun eigen manier. Eén vaste vorm voor de hele opleiding.</p></div>
-        <div class="card"><h4>Kritisch denken als rode draad</h4><p>Elk jaar heeft minstens één opdracht waarin ethiek of auteurschap aan bod komt.</p></div>
         <div class="card"><h4>Steun voor docenten</h4><p>Vorming, licenties en overleg tussen collega's, zoals in de enquête gevraagd.</p></div>
       </div>
     </div>
@@ -305,4 +374,28 @@ footer.end a.tile:hover { --bg: var(--orange); }
     <div class="tile t-blue"><div class="corner meta"><span>Stand</span><span></span></div><p style="font-weight:600">Concept, nog niet besproken</p></div>
   </footer>
 </div>
+
+<script>
+// Pagina opent altijd bovenaan
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+window.scrollTo(0, 0);
+
+// Label per semester: het label met de meeste studiepunten in de vakkaarten (bij gelijkstand het verste label)
+const LABELS = { geen: 'Zonder AI', over: 'Over AI', hulp: 'AI als hulp', regie: 'AI in regie' };
+document.querySelectorAll('.group').forEach(g => {
+  const m = g.querySelector('h3.sub')?.textContent.match(/Semester (\d)/);
+  const slot = m && document.querySelector('.tl-sem[data-sem="' + m[1] + '"] .tl-lab');
+  if (!slot) return;
+  const sum = {};
+  g.querySelectorAll('.course').forEach(c => {
+    const sp = (c.querySelector('.top span')?.textContent.match(/\d+/g) || []).reduce((a, b) => a + +b, 0);
+    const lab = Object.keys(LABELS).find(k => c.querySelector('.lab.' + k));
+    if (lab) sum[lab] = (sum[lab] || 0) + sp;
+  });
+  let best = null;
+  Object.keys(LABELS).forEach(k => { if (sum[k] && (!best || sum[k] >= sum[best])) best = k; });
+  if (best) { slot.className = 'tl-lab lab ' + best; slot.textContent = LABELS[best]; }
+});
+</script>
 </html>
