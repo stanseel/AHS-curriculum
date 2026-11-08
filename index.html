@@ -154,6 +154,12 @@ h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%;
 .card.feature h3 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; line-height: .95; }
 .big-words { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(22px, 2.8vw, 32px); line-height: .95; margin-top: 10px; }
 .big-words.small { font-size: 21px; line-height: 1.05; }
+.names .card.feature { counter-reset: naam; }
+.names .card.feature .tag + .big-words { margin-top: 16px; }
+.names .card.feature .big-words { counter-increment: naam; display: grid; grid-template-columns: 26px 1fr; align-items: start; margin-top: 0; padding: 12px 0 11px; border-top: 2px solid currentColor; }
+.names .card.feature .big-words::before { content: counter(naam); font-family: var(--font-body); font-weight: 700; font-stretch: 100%; font-size: 13px; letter-spacing: .05em; line-height: 1; padding-top: .3em; }
+.names .card.feature .big-words:not(:has(+ .big-words)) { border-bottom: 2px solid currentColor; }
+.names .card.feature .big-words + p:not(.big-words) { margin-top: 16px !important; }
 blockquote { margin: 0; background: var(--green); color: #000; padding: 46px 20px 18px; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; }
 blockquote::before { content: "“"; position: absolute; top: 4px; left: 18px; font-family: var(--font-display); font-weight: 900; font-size: 44px; line-height: 1; }
 blockquote p { font-size: 21px; font-weight: 600; line-height: 1.3; }
