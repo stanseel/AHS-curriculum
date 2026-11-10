@@ -151,6 +151,18 @@ p { margin: 0; }
 h3.sub { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(20px, 2.4vw, 26px); line-height: .95; color: var(--white); margin-top: 40px; padding-top: 18px; border-top: 3px solid var(--chap); }
 .block > h3.sub:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--gap); }
+.needs { display: grid; gap: var(--gap); }
+.need { --ink: #000000; --muted: #4a4a4a; --rule: #cfcfcf; background: var(--sheet); color: var(--ink); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px 28px; padding: 20px 22px 22px; }
+.need-head { display: flex; flex-direction: column; gap: 6px; }
+.need-head b { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: clamp(40px, 5vw, 56px); line-height: .8; }
+.need-n { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.need h4 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(19px, 2.1vw, 24px); line-height: 1; text-wrap: balance; hyphens: auto; }
+.need ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.need li { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 9px 0; border-top: 1px solid var(--rule, #ddd); }
+.need li:first-child { border-top: 0; padding-top: 2px; }
+.need li .tag { justify-self: start; }
+@media (max-width: 640px) { .need { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .need li { grid-template-columns: 1fr; gap: 6px; } .need li > span:last-child { overflow-wrap: break-word; } }
 .card { background: var(--sheet); color: var(--ink); padding: 16px 18px 18px; min-width: 0; }
 .card ul { margin: 10px 0 0; padding-left: 18px; }
 .card li + li { margin-top: 6px; }
@@ -592,17 +604,47 @@ footer.end a.tile:hover { --bg: var(--orange); }
       </div>
 
       <h3 class="sub">Wat collega's nodig hebben</h3>
-      <div class="duo">
-        <div class="card eva"><span class="tag">Eva</span><p>Meer kennis en uitwisseling met collega's.</p></div>
-        <div class="card hans"><span class="tag">Hans</span><p>Goede afspraken, een duidelijke leerlijn en voor alle studenten genoeg credits op hetzelfde platform.</p></div>
-        <div class="card rik"><span class="tag">Rik</span><p>Opleiding en uitwisseling als start.</p></div>
-        <div class="card stijn"><span class="tag">Stijn</span><p>Meer licenties en ruimte om technologie te testen zonder ingewikkelde aanvraagprocedures. Vaste momenten om ervaring uit te wisselen in het docententeam.</p></div>
-        <div class="card pieter"><span class="tag">Pieter</span><p>Alles: tijd, vorming, licenties, gedeelde afspraken en uitwisseling met collega's. Meer overleg binnen CMD, ook om ons intern en extern sterker te profileren.</p></div>
-        <div class="card marieke"><span class="tag">Marieke</span><p>Schoolbrede afspraken, over alle vakken heen, en misschien een leerlijn.</p></div>
-        <div class="card olivier"><span class="tag">Olivier</span><p>Duidelijke richtlijnen: hoe, wat en in welke mate AI inzetten?</p></div>
-        <div class="card tineke"><span class="tag">Tineke</span><p>Een duidelijk afsprakenkader: wat kan en mag wel, wat niet. Licenties voor de tools, en vormingen zolang ze nuttig en leerrijk zijn.</p></div>
+      <p class="note">Een top 4, gerangschikt op hoe vaak een thema terugkomt. Wie meerdere dingen noemde, staat bij meerdere thema's.</p>
+      <div class="needs">
+        <div class="need">
+          <div class="need-head"><b>1</b><h4>Duidelijke afspraken en een leerlijn</h4><span class="need-n">5 collega's</span></div>
+          <ul>
+            <li><span class="tag">Hans</span><span>Goede afspraken en een duidelijke leerlijn.</span></li>
+            <li><span class="tag">Marieke</span><span>Schoolbrede afspraken, over alle vakken heen, en misschien een leerlijn.</span></li>
+            <li><span class="tag">Olivier</span><span>Duidelijke richtlijnen: hoe, wat en in welke mate AI inzetten?</span></li>
+            <li><span class="tag">Tineke</span><span>Een duidelijk afsprakenkader: wat kan en mag wel, wat niet.</span></li>
+            <li><span class="tag">Pieter</span><span>Gedeelde afspraken.</span></li>
+          </ul>
+        </div>
+        <div class="need">
+          <div class="need-head"><b>2</b><h4>Uitwisseling en overleg</h4><span class="need-n">4 collega's</span></div>
+          <ul>
+            <li><span class="tag">Eva</span><span>Meer uitwisseling met collega's.</span></li>
+            <li><span class="tag">Rik</span><span>Uitwisseling onder collega's als start.</span></li>
+            <li><span class="tag">Stijn</span><span>Vaste momenten om ervaring uit te wisselen in het docententeam.</span></li>
+            <li><span class="tag">Pieter</span><span>Uitwisseling, en meer overleg binnen CMD, ook om ons intern en extern sterker te profileren.</span></li>
+          </ul>
+        </div>
+        <div class="need">
+          <div class="need-head"><b>3</b><h4>Vorming en kennis</h4><span class="need-n">4 collega's</span></div>
+          <ul>
+            <li><span class="tag">Eva</span><span>Meer kennis.</span></li>
+            <li><span class="tag">Rik</span><span>Opleiding als start.</span></li>
+            <li><span class="tag">Pieter</span><span>Vorming.</span></li>
+            <li><span class="tag">Tineke</span><span>Vormingen, zolang ze nuttig en leerrijk zijn.</span></li>
+          </ul>
+        </div>
+        <div class="need">
+          <div class="need-head"><b>4</b><h4>Licenties, tijd en ruimte</h4><span class="need-n">4 collega's</span></div>
+          <ul>
+            <li><span class="tag">Hans</span><span>Voor alle studenten genoeg credits op hetzelfde platform.</span></li>
+            <li><span class="tag">Stijn</span><span>Meer licenties en ruimte om technologie te testen zonder ingewikkelde aanvraagprocedures.</span></li>
+            <li><span class="tag">Pieter</span><span>Tijd en licenties.</span></li>
+            <li><span class="tag">Tineke</span><span>Licenties voor de tools.</span></li>
+          </ul>
+        </div>
       </div>
-    </div>
+        </div>
   </div></details>
 
   <details class="chap" id="briefings">
